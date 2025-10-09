@@ -67,7 +67,7 @@ public class UserService {
     }
 
     public boolean userFound(String correo) {
-        if (!userRepository.correoExist(correo)) {
+        if (!userRepository.existsByCorreo(correo)) {
             return false;
         }
         return true;
