@@ -15,4 +15,17 @@ public class Exceptions {
             super("El libro con id " + id + " no existe");
         }
     }
+
+    public static class DuplicateUser extends Exception {
+
+        public DuplicateUser(String correo) {
+            super("El usuario con correo " + correo + " ya existe");
+        }
+    }
+
+    public static class InvalidMonth extends Exception {
+        public InvalidMonth() {
+            super("El mes no puede ser menor que 1 o mayor que 12");
+        }
+    }
 }

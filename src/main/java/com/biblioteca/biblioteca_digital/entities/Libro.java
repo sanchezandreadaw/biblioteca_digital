@@ -48,6 +48,6 @@ public class Libro {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User User;
+    private User user;
 
 }

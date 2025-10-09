@@ -7,5 +7,5 @@ import com.biblioteca.biblioteca_digital.entities.User;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-
+    public boolean correoExist(String correo);
 }
