@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home - BibliotecaDigital</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* ---------- RESET ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #080710;
+            display: flex;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        /* ---------- SIDEBAR ---------- */
+        .sidebar {
+            width: 240px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px 20px;
+            border-right: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #23a2f6;
+        }
+
+        .menu a {
+            display: block;
+            text-decoration: none;
+            color: #eaf0fb;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background 0.3s;
+        }
+
+        .menu a:hover {
+            background: linear-gradient(90deg, #1845ad, #23a2f6);
+            color: #fff;
+        }
+
+        .logout {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .logout button {
+            background: linear-gradient(to right, #ff512f, #f09819);
+            border: none;
+            padding: 10px 25px;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        /* ---------- MAIN CONTENT ---------- */
+        .content {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 500;
+        }
+
+        .add-btn {
+            background: linear-gradient(to right, #1845ad, #23a2f6);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .add-btn:hover {
+            background: linear-gradient(to right, #23a2f6, #1845ad);
+        }
+
+        /* ---------- CARDS GRID ---------- */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 15px rgba(8, 7, 16, 0.6);
+            position: relative;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 20px;
+            color: #23a2f6;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #ddd;
+            margin-bottom: 6px;
+        }
+
+        .card .actions {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+
+        .card .actions i {
+            color: #eaf0fb;
+            margin-left: 8px;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .card .actions i:hover {
+            color: #f09819;
+        }
+
+        /* ---------- SCROLLBAR ---------- */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div>
+            <h2>BibliotecaDigital</h2>
+            <nav class="menu">
+                <a href="#" class="active"><i class="fas fa-book-open"></i> Mis Lecturas</a>
+                <a href="#"><i class="fas fa-chart-bar"></i> Ver lecturas totales</a>
+            </nav>
+        </div>
+
+        <div class="logout">
+            <button onclick="window.location.href='/logout'">Cerrar sesión</button>
+        </div>
+    </aside>
+
+    <main class="content">
+        <div class="header">
+            <h1>Mis Lecturas</h1>
+            <button class="add-btn" onclick="window.location.href='/lecturas/nueva'">
+                <i class="fas fa-plus"></i> Añadir nueva lectura
+            </button>
+        </div>
+
+        <section class="cards">
+            <!-- Card ejemplo -->
+            <div class="card">
+                <div class="actions">
+                    <i class="fas fa-edit" title="Editar"></i>
+                    <i class="fas fa-trash" title="Borrar"></i>
+                </div>
+                <h3>El nombre del viento</h3>
+                <p><strong>Autor:</strong> Patrick Rothfuss</p>
+                <p><strong>Género:</strong> Fantasía</p>
+                <p><strong>Inicio:</strong> 2025-01-10</p>
+                <p><strong>Fin:</strong> 2025-02-20</p>
+            </div>
+
+            <div class="card">
+                <div class="actions">
+                    <i class="fas fa-edit" title="Editar"></i>
+                    <i class="fas fa-trash" title="Borrar"></i>
+                </div>
+                <h3>1984</h3>
+                <p><strong>Autor:</strong> George Orwell</p>
+                <p><strong>Género:</strong> Distopía</p>
+                <p><strong>Inicio:</strong> 2025-03-01</p>
+                <p><strong>Fin:</strong> 2025-03-25</p>
+            </div>
+
+            <!-- Aquí se generarán dinámicamente las lecturas del usuario -->
+        </section>
+    </main>
+
+</body>
+
+</html>
