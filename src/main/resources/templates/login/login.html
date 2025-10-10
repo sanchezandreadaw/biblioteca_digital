@@ -53,7 +53,7 @@
         }
 
         form {
-            height: 540px;
+            height: 520px;
             width: 400px;
             background-color: rgba(255, 255, 255, 0.13);
             position: absolute;
@@ -105,8 +105,8 @@
             color: #e5e5e5;
         }
 
-        button {
-            margin-top: 50px;
+        .entrar {
+            margin-top: 20px;
             width: 100%;
             background-color: #ffffff;
             color: #080710;
@@ -118,30 +118,29 @@
         }
 
         .social {
-            margin-top: 30px;
+            margin-top: 20px;
+            background-color: none !important;
+            text-align: center;
             display: flex;
+            gap: 5%;
         }
 
         .social div {
-            background: red;
-            width: 150px;
             border-radius: 3px;
-            padding: 5px 10px 10px 5px;
+            padding: 10px;
             background-color: rgba(255, 255, 255, 0.27);
             color: #eaf0fb;
-            text-align: center;
+            cursor: pointer;
         }
 
         .social div:hover {
             background-color: rgba(255, 255, 255, 0.47);
         }
 
-        .social .fb {
-            margin-left: 25px;
-        }
+        .btn-flex {
+            background: none !important;
+            width: 100%;
 
-        .social i {
-            margin-right: 4px;
         }
     </style>
 </head>
@@ -160,13 +159,14 @@
         <label for="password">Contraseña</label>
         <input type="password" placeholder="contraseña" id="password">
 
-        <button>Entrar</button>
+        <button class="entrar">Entrar</button>
         <div class="social">
-            <div class="go">
-                <p>Recuperar contraseña</p>
+            <div class="">
+                <button type="button" class="btn-flex">Recuperar contraseña</button>
             </div>
-            <div class="fb">
-                <p>¿Nuevo usuario?</p>
+            <div class="">
+                <button type="button" class="btn-flex" th:onclick="|window.location.href='@{/registro}'|">¿Nuevo
+                    usuario?</button>
             </div>
         </div>
     </form>
