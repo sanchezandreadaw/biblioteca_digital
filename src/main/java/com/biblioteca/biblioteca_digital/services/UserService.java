@@ -66,6 +66,16 @@ public class UserService {
 
     }
 
+    public boolean validate_login(String correo, String password) {
+        List<User> usuarios = userRepository.findAll();
+        for (User usuario : usuarios) {
+            if (usuario.getCorreo().equals(correo) && usuario.getPassword().equals(password)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean userFound(String correo) {
         if (!userRepository.existsByCorreo(correo)) {
             return false;
