@@ -2,6 +2,7 @@ package com.biblioteca.biblioteca_digital.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,14 +21,15 @@ public class LoginController {
     }
 
     @PostMapping("/validar_credenciales")
-    public String validarCredenciales(@RequestParam("correo") String correo,
+    public String validarCredenciales(@RequestParam("correo") String correo, Model model,
             @RequestParam("password") String password) {
+
         if (userService.validate_login(correo, password)) {
-            System.out.println("Credenciales correctas");
             return "redirect:/home";
         } else {
-            System.out.println("Credenciales incorrectas");
-            return "redirect:/login";
+            model.addAttribute("validador", false);
+            model.addAttribute("mensajeError", "Correo o contraseña incorrectos.");
+            return "login/login";
         }
     }
 
