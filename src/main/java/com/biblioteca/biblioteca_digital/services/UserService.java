@@ -14,6 +14,7 @@ import com.biblioteca.biblioteca_digital.exceptions.Exceptions.DuplicateUser;
 import com.biblioteca.biblioteca_digital.exceptions.Exceptions.InvalidMonth;
 import com.biblioteca.biblioteca_digital.exceptions.Exceptions.LibroNotFound;
 import com.biblioteca.biblioteca_digital.exceptions.Exceptions.UserNotFound;
+import com.biblioteca.biblioteca_digital.helpers.StaticData;
 import com.biblioteca.biblioteca_digital.repositories.LibroRepository;
 import com.biblioteca.biblioteca_digital.repositories.UserRepository;
 import com.biblioteca.biblioteca_digital.security.Encoder;
@@ -49,6 +50,8 @@ public class UserService {
 
         if (!userFound(correo)) {
 
+            StaticData.validateUser(nombre, apellidos, correo, password);
+
             if (libros == null) {
                 libros = new ArrayList<>();
             }
@@ -66,7 +69,7 @@ public class UserService {
 
     }
 
-    public boolean validate_login(String correo, String password) {
+    public boolean isValidLogin(String correo, String password) {
         List<User> usuarios = userRepository.findAll();
         for (User usuario : usuarios) {
             if (usuario.getCorreo().equals(correo) && usuario.getPassword().equals(password)) {

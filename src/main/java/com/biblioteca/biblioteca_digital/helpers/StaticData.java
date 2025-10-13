@@ -1,9 +1,7 @@
 package com.biblioteca.biblioteca_digital.helpers;
 
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class StaticData {
 
@@ -15,42 +13,40 @@ public class StaticData {
             'v', 'w', 'x', 'y', 'z'
     };
 
-    public static List<String> validateUser(String nombre, String apellidos, String correo, String password) {
-        List<String> errores = new ArrayList<>();
+    public static boolean validateUser(String nombre, String apellidos, String correo, String password) {
 
         if (nombre.length() < 3) {
-            errores.add("El nombre debe tener al menos 3 caracteres.");
+            throw new IllegalArgumentException("El nombre debe tener al menos 3 caracteres");
         }
 
         if (apellidos.length() < 3) {
-            errores.add("Los apellidos deben tener al menos 3 caracteres.");
+            throw new IllegalArgumentException("Los apellidos deben tener al menos 3 caracteres.");
         }
 
         if (!correo.contains("@")) {
-            errores.add("El correo debe contener un dominio válido.");
+            throw new IllegalArgumentException("El correo debe contener un dominio válido.");
         }
-        errores.addAll(validatePassword(password));
+        isValidPassword(password);
 
-        return errores;
+        return true;
     }
 
-    public static List<String> validatePassword(String password) {
-        List<String> errores = new ArrayList<>();
+    public static boolean isValidPassword(String password) {
 
         if (password.length() < 8) {
-            errores.add("La contraseña debe tener al menos 8 caracteres.");
+            throw new IllegalArgumentException("La contraseña debe tener al menos 8 caracteres.");
         }
         if (!containsLowercase(password)) {
-            errores.add("La contraseña debe tener al menos una minúscula.");
+            throw new IllegalArgumentException("La contraseña debe tener al menos una minúscula.");
         }
         if (!containsUpperCase(password)) {
-            errores.add("La contraseña debe tener al menos una mayúscula.");
+            throw new IllegalArgumentException("La contraseña debe tener al menos una mayúscula.");
         }
         if (!containsSpecialChar(password)) {
-            errores.add("La contraseña debe tener al menos un caracter especial.");
+            throw new IllegalArgumentException("La contraseña debe tener al menos un caracter especial.");
         }
 
-        return errores;
+        return true;
     }
 
     public static boolean containsLowercase(String password) {

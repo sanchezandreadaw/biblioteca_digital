@@ -24,7 +24,7 @@ public class LoginController {
     public String validarCredenciales(@RequestParam("correo") String correo, Model model,
             @RequestParam("password") String password) {
 
-        if (userService.validate_login(correo, password)) {
+        if (userService.isValidLogin(correo, password)) {
             return "redirect:/home";
         } else {
             model.addAttribute("validador", false);
