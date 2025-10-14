@@ -36,12 +36,14 @@ public class LoginController {
             return "login/login";
         }
 
-        if (!userService.signIn(loginDTO.getCorreo(), loginDTO.getPassword())) {
+        Long idUsuario = userService.signIn(loginDTO.getCorreo(), loginDTO.getPassword());
+        if (idUsuario == 0) {
             model.addAttribute("mensajeError", "Correo electrónico o contraseña incorrectos.");
             return "login/login";
         }
 
-        return "redirect:/home";
+        System.out.println("Id del usuario " + idUsuario);
+        return "redirect:/home?id=" + idUsuario;
 
     }
 

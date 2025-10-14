@@ -12,11 +12,13 @@ public class SecurityConfig {
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
                 http
                                 .authorizeHttpRequests(auth -> auth
-                                                .requestMatchers("/login", "/registro", "/validar_credenciales",
-                                                                "/home", "/alta", "/registro_exitoso", "/css/**",
-                                                                "/js/**",
-                                                                "/images/**")
-                                                .permitAll().anyRequest().authenticated())
+                                                .requestMatchers(
+                                                                "/login", "/registro", "/validar_credenciales",
+                                                                "/home", "/alta", "/view_add_lectura",
+                                                                "/registro_exitoso", "/add", "/lecturas_totales",
+                                                                "/css/**", "/js/**", "/images/**")
+                                                .permitAll()
+                                                .anyRequest().authenticated())
                                 .formLogin(form -> form
                                                 .loginPage("/login")
                                                 .defaultSuccessUrl("/home", true)
@@ -27,5 +29,4 @@ public class SecurityConfig {
 
                 return http.build();
         }
-
 }

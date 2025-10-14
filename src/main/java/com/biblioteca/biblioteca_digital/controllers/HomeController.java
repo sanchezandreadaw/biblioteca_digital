@@ -1,17 +1,24 @@
 package com.biblioteca.biblioteca_digital.controllers;
 
 import java.time.LocalDate;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.biblioteca.biblioteca_digital.dtos.AddLecturaDTO;
 import com.biblioteca.biblioteca_digital.enums.GeneroLibro;
 import com.biblioteca.biblioteca_digital.services.UserService;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class HomeController {
@@ -20,7 +27,9 @@ public class HomeController {
     private UserService userService;
 
     @GetMapping("/home")
-    public String getHome() {
+    public String getHome(@RequestParam Long id, Model model) {
+        System.out.println("ID recibido: " + id);
+        model.addAttribute("idUsuario", id);
         return "home/home";
     }
 
@@ -29,12 +38,32 @@ public class HomeController {
         return "lecturas/lecturas";
     }
 
+    @GetMapping("/view_add_lectura")
+    public String getFormToAdd(Model model) {
+        if (!model.containsAttribute("lectura")) {
+            model.addAttribute("lectura", new AddLecturaDTO());
+        }
+        model.addAttribute("generos", Arrays.asList(GeneroLibro.values()));
+        return "lecturas/add_lectura";
+    }
+
     @PostMapping("/add")
-    public void agregarLectura(@RequestParam("titulo") String titulo,
-            @RequestParam("autor") String autor,
-            @RequestParam("genero") GeneroLibro genero,
-            @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaInicio,
-            @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaFin) {
+    public String agregarLectura(@Valid @ModelAttribute("lectura") AddLecturaDTO addLecturaDTO,
+            BindingResult bindingResult, Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("lectura", new AddLecturaDTO());
+            return "lectura/add_lectura";
+        }
+
+        if (addLecturaDTO.getFechaFin().isBefore(addLecturaDTO.getFechaInicio())) {
+            model.addAttribute("invalid_date",
+                    "La fecha de finalización del libro no puede ser anterior a la fecha inicial");
+            model.addAttribute("lecutra", new AddLecturaDTO());
+            return "lectura/add_lectura";
+        }
+
+        return "redirect:/home";
     }
 
     @PutMapping("/update")

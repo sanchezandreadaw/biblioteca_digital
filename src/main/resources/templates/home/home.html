@@ -191,7 +191,7 @@
     <main class="content">
         <div class="header">
             <h1>Mis Lecturas</h1>
-            <button class="add-btn" onclick="window.location.href='/lecturas/nueva'">
+            <button type="button" class="add-btn" th:onclick="|window.location.href='@{/view_add_lectura}'|" |>
                 <i class="fas fa-plus"></i> Añadir nueva lectura
             </button>
         </div>

@@ -8,6 +8,9 @@ import jakarta.validation.constraints.NotBlank;
 
 public class AddLecturaDTO {
 
+    @NotBlank(message = "El id del usuario es obligatorio")
+    private Long idUsuario;
+
     @NotBlank(message = "El título es obligatorio.")
     private String titulo;
 
@@ -26,13 +29,22 @@ public class AddLecturaDTO {
     public AddLecturaDTO() {
     }
 
-    public AddLecturaDTO(String titulo, String autor, GeneroLibro generoLibro, LocalDate fechaInicio,
+    public AddLecturaDTO(Long idUsuario, String titulo, String autor, GeneroLibro generoLibro, LocalDate fechaInicio,
             LocalDate fechaFin) {
+        this.idUsuario = idUsuario;
         this.titulo = titulo;
         this.autor = autor;
         this.generoLibro = generoLibro;
         this.fechaInicio = fechaInicio;
         this.fechaFin = fechaFin;
+    }
+
+    public Long getIdUsuario() {
+        return idUsuario;
+    }
+
+    public void setIdUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getTitulo() {

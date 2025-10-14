@@ -3,6 +3,7 @@ package com.biblioteca.biblioteca_digital.services;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,18 +30,19 @@ public class UserService {
     @Autowired
     private LibroService libroService;
 
-    public User findById(Long id) throws UserNotFound {
-        User usuario = userRepository.findById(id).orElseThrow(() -> new UserNotFound(id));
+    public Optional<User> findById(Long id) {
+        Optional<User> usuario = userRepository.findById(id);
         return usuario;
     }
 
     public List<Libro> getLibrosUser(Long id) throws UserNotFound {
-        User usuario = findById(id);
+        Optional<User> usuario = findById(id);
 
-        if (usuario.getLibros() == null) {
+        if (usuario.get().getLibros() == null) {
             return new ArrayList<>();
         }
-        return usuario.getLibros();
+
+        return usuario.get().getLibros();
     }
 
     public void createUser(String nombre, String apellidos, String correo, String password, List<Libro> libros) {
@@ -59,12 +61,12 @@ public class UserService {
 
     }
 
-    public boolean signIn(String correo, String password) {
+    public Long signIn(String correo, String password) {
         User usuario = userRepository.findByCorreo(correo);
         if (usuario != null && Encoder.passwordEncoder().matches(password, usuario.getPassword())) {
-            return true;
+            return usuario.getId();
         }
-        return false;
+        return 0L;
     }
 
     public boolean userFound(String correo) {
@@ -75,16 +77,15 @@ public class UserService {
     }
 
     public void guardarLectura(Long id_usuario, String titulo, String autor, GeneroLibro genero, LocalDate fechaInicio,
-            LocalDate fechaFin) throws UserNotFound {
-
-        User usuario = findById(id_usuario);
+            LocalDate fechaFin) {
+        Optional<User> usuario = findById(id_usuario);
         Libro libro = Libro.builder()
                 .titulo(titulo.trim())
                 .autor(autor.trim())
                 .generoLibro(genero)
                 .fechaInicio(fechaInicio)
                 .fechaFin(fechaFin)
-                .user(usuario)
+                .user(usuario.get())
                 .build();
 
         libroRepository.save(libro);
@@ -119,13 +120,13 @@ public class UserService {
     }
 
     public int obtenerTotalLecturasMensuales(Long id_usuario) throws UserNotFound {
-        User usuario = findById(id_usuario);
+        Optional<User> usuario = findById(id_usuario);
         int mesActual = LocalDate.now().getMonthValue();
         List<Libro> libros_usuario = new ArrayList<>();
         int contador = 0;
 
-        if (usuario.getLibros() != null) {
-            libros_usuario.addAll(usuario.getLibros());
+        if (usuario.get().getLibros() != null) {
+            libros_usuario.addAll(usuario.get().getLibros());
             for (Libro libro : libros_usuario) {
                 if (libro.getFechaFin().getMonthValue() == mesActual) {
                     contador += 1;
@@ -137,13 +138,13 @@ public class UserService {
 
     public int obtenerTotalLecturasAnuales(Long id_usuario) throws UserNotFound {
 
-        User usuario = findById(id_usuario);
+        Optional<User> usuario = findById(id_usuario);
         int anyoActual = LocalDate.now().getYear();
         List<Libro> libros_usuario = new ArrayList<>();
         int contador = 0;
 
-        if (usuario.getLibros() != null) {
-            libros_usuario.addAll(usuario.getLibros());
+        if (usuario.get().getLibros() != null) {
+            libros_usuario.addAll(usuario.get().getLibros());
             for (Libro libro : libros_usuario) {
                 if (libro.getFechaFin().getYear() == anyoActual) {
                     contador += 1;
@@ -157,12 +158,12 @@ public class UserService {
         if (mes < 0 || mes > 12) {
             throw new InvalidMonth();
         }
-        User usuario = findById(id_usuario);
+        Optional<User> usuario = findById(id_usuario);
         List<Libro> lecturas_usuario = new ArrayList<>();
         List<Libro> lecturas_mensuales = new ArrayList<>();
 
-        if (usuario.getLibros() != null) {
-            lecturas_usuario.addAll(usuario.getLibros());
+        if (usuario.get().getLibros() != null) {
+            lecturas_usuario.addAll(usuario.get().getLibros());
             lecturas_mensuales = lecturas_usuario.stream().filter((libro) -> libro.getFechaFin().getMonthValue() == mes)
                     .toList();
 
@@ -173,7 +174,7 @@ public class UserService {
     }
 
     public List<Libro> getLecturasAnuales(Long id_usuario, int year) throws UserNotFound, Exception {
-        User usuario = findById(id_usuario);
+        Optional<User> usuario = findById(id_usuario);
         int anyoActual = LocalDate.now().getYear();
         if (year < 1999 || year > anyoActual) {
             throw new Exception("El año no puede ser inferior a 1999 ni superior al año actual");
@@ -182,8 +183,8 @@ public class UserService {
         List<Libro> lecturas_usuario = new ArrayList<>();
         List<Libro> lecturas_anuales = new ArrayList<>();
 
-        if (usuario.getLibros() != null) {
-            lecturas_usuario.addAll(usuario.getLibros());
+        if (usuario.get().getLibros() != null) {
+            lecturas_usuario.addAll(usuario.get().getLibros());
             lecturas_anuales = lecturas_usuario.stream().filter((libro) -> libro.getFechaFin().getYear() == year)
                     .toList();
 
