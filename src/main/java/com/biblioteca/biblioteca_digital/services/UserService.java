@@ -59,7 +59,7 @@ public class UserService {
 
     }
 
-    public boolean isValidLogin(String correo, String password) {
+    public boolean signIn(String correo, String password) {
         User usuario = userRepository.findByCorreo(correo);
         if (usuario != null && Encoder.passwordEncoder().matches(password, usuario.getPassword())) {
             return true;
