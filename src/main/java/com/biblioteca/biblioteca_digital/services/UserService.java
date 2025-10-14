@@ -10,11 +10,9 @@ import org.springframework.stereotype.Service;
 import com.biblioteca.biblioteca_digital.entities.Libro;
 import com.biblioteca.biblioteca_digital.entities.User;
 import com.biblioteca.biblioteca_digital.enums.GeneroLibro;
-import com.biblioteca.biblioteca_digital.exceptions.Exceptions.DuplicateUser;
 import com.biblioteca.biblioteca_digital.exceptions.Exceptions.InvalidMonth;
 import com.biblioteca.biblioteca_digital.exceptions.Exceptions.LibroNotFound;
 import com.biblioteca.biblioteca_digital.exceptions.Exceptions.UserNotFound;
-import com.biblioteca.biblioteca_digital.helpers.StaticData;
 import com.biblioteca.biblioteca_digital.repositories.LibroRepository;
 import com.biblioteca.biblioteca_digital.repositories.UserRepository;
 import com.biblioteca.biblioteca_digital.security.Encoder;
@@ -45,27 +43,19 @@ public class UserService {
         return usuario.getLibros();
     }
 
-    public void createUser(String nombre, String apellidos, String correo, String password, List<Libro> libros)
-            throws DuplicateUser {
+    public void createUser(String nombre, String apellidos, String correo, String password, List<Libro> libros) {
 
-        if (!userFound(correo)) {
-
-            StaticData.validateUser(nombre, apellidos, correo, password);
-
-            if (libros == null) {
-                libros = new ArrayList<>();
-            }
-            User usuario = User.builder()
-                    .nombre(nombre.trim())
-                    .apellidos(apellidos.trim())
-                    .correo(correo.trim())
-                    .password(Encoder.passwordEncoder().encode(password))
-                    .libros(libros)
-                    .build();
-            userRepository.save(usuario);
-        } else {
-            throw new DuplicateUser(correo);
+        if (libros == null) {
+            libros = new ArrayList<>();
         }
+        User usuario = User.builder()
+                .nombre(nombre.trim())
+                .apellidos(apellidos.trim())
+                .correo(correo.trim())
+                .password(Encoder.passwordEncoder().encode(password))
+                .libros(libros)
+                .build();
+        userRepository.save(usuario);
 
     }
 

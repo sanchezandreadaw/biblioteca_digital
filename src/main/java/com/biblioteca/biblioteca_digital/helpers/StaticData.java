@@ -13,39 +13,10 @@ public class StaticData {
             'v', 'w', 'x', 'y', 'z'
     };
 
-    public static boolean validateUser(String nombre, String apellidos, String correo, String password) {
-
-        if (nombre.length() < 3) {
-            throw new IllegalArgumentException("El nombre debe tener al menos 3 caracteres");
+    public static boolean isValidNameAndSurname(String nombre, String apellidos) {
+        if (nombre.length() < 3 || apellidos.length() < 3) {
+            return false;
         }
-
-        if (apellidos.length() < 3) {
-            throw new IllegalArgumentException("Los apellidos deben tener al menos 3 caracteres.");
-        }
-
-        if (!correo.contains("@")) {
-            throw new IllegalArgumentException("El correo debe contener un dominio válido.");
-        }
-        isValidPassword(password);
-
-        return true;
-    }
-
-    public static boolean isValidPassword(String password) {
-
-        if (password.length() < 8) {
-            throw new IllegalArgumentException("La contraseña debe tener al menos 8 caracteres.");
-        }
-        if (!containsLowercase(password)) {
-            throw new IllegalArgumentException("La contraseña debe tener al menos una minúscula.");
-        }
-        if (!containsUpperCase(password)) {
-            throw new IllegalArgumentException("La contraseña debe tener al menos una mayúscula.");
-        }
-        if (!containsSpecialChar(password)) {
-            throw new IllegalArgumentException("La contraseña debe tener al menos un caracter especial.");
-        }
-
         return true;
     }
 
