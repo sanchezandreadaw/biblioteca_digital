@@ -60,11 +60,9 @@ public class UserService {
     }
 
     public boolean isValidLogin(String correo, String password) {
-        List<User> usuarios = userRepository.findAll();
-        for (User usuario : usuarios) {
-            if (usuario.getCorreo().equals(correo) && usuario.getPassword().equals(password)) {
-                return true;
-            }
+        User usuario = userRepository.findByCorreo(correo);
+        if (usuario != null && Encoder.passwordEncoder().matches(password, usuario.getPassword())) {
+            return true;
         }
         return false;
     }
