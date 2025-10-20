@@ -55,7 +55,7 @@
         }
 
         form {
-            height: 520px;
+            height: 420px;
             width: 400px;
             background-color: rgba(255, 255, 255, 0.13);
             position: absolute;
@@ -107,16 +107,24 @@
             color: #e5e5e5;
         }
 
-        .entrar {
+        .entrar,
+        .registro {
             margin-top: 20px;
+
             width: 100%;
             background-color: #ffffff;
             color: #080710;
-            padding: 15px 0;
+            padding: 6px;
             font-size: 18px;
             font-weight: 600;
             border-radius: 5px;
             cursor: pointer;
+
+        }
+
+        .button-container {
+            display: flex !important;
+            gap: 12px !important;
         }
 
         .social {
@@ -155,6 +163,11 @@
         .error-message * {
             color: #ff6b6b !important;
         }
+
+
+        .button-container {
+            display: flex !important;
+        }
     </style>
 </head>
 
@@ -175,11 +188,17 @@
         <label for="password">Contraseña</label>
         <input type="password" th:field="*{password}" placeholder="contraseña" required>
 
-        <button type="submit" class="entrar">Entrar</button>
+        <div class="button-container">
+            <button type="submit" class="entrar">Entrar</button>
+            <button type="button" th:onclick="|window.location.href='@{/registro}'|"
+                class="registro">Registrarse</button>
+        </div>
 
         <div th:if="${error}" class="error-message" th:text="${error}"></div>
 
     </form>
+
+
 
 
 </body>
