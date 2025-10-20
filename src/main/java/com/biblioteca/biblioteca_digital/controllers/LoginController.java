@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.biblioteca.biblioteca_digital.dtos.LoginDTO;
-import com.biblioteca.biblioteca_digital.security.JwtService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -26,9 +25,6 @@ public class LoginController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
-
-    @Autowired
-    private JwtService jwtService;
 
     @GetMapping("/login")
     public String mostrarLogin(Model model) {
@@ -60,9 +56,6 @@ public class LoginController {
             HttpSession session = request.getSession(true);
             session.setAttribute(HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY,
                     SecurityContextHolder.getContext());
-
-            String token = jwtService.generateToken(loginDTO.getCorreo());
-            model.addAttribute("token", token);
 
             return "redirect:/home";
 
