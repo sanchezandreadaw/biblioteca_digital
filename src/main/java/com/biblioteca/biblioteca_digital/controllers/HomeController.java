@@ -80,23 +80,21 @@ public class HomeController {
         return "redirect:/home";
     }
 
-    // @PutMapping("/update")
-    // public void actualizarLectura(@RequestParam("id") Long id,
-    // @RequestParam("titulo") String titulo,
-    // @RequestParam("autor") String autor,
-    // @RequestParam("genero") GeneroLibro genero,
-    // @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd")
-    // LocalDate fechaInicio,
-    // @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate
-    // fechaFin) {
-    // }
+    @PutMapping("/update")
+    public void actualizarLectura(@RequestParam("id") Long id,
+            @RequestParam("titulo") String titulo,
+            @RequestParam("autor") String autor,
+            @RequestParam("genero") GeneroLibro genero,
+            @RequestParam("fechaInicio") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaInicio,
+            @RequestParam("fechaFin") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fechaFin) {
+    }
 
-    // @PostMapping("/delete")
-    // public void borrarLectura(@RequestParam("id") Long id) {
-    // try {
-    // userService.eliminarLectura(id);
-    // } catch (Exception exception) {
-    // System.out.println(exception.getMessage());
-    // }
-    // }
+    @PostMapping("/delete")
+    public void borrarLectura(@RequestParam("id") Long id) {
+        try {
+            userService.eliminarLectura(id);
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
+        }
+    }
 }

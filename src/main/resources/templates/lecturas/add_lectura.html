@@ -154,11 +154,10 @@
 
         <label for="fechaInicio">Fecha de inicio</label>
         <input type="date" th:field="*{fechaInicio}" required>
-        <div class="error-message" th:if="${#fields.hasErrors('fechaInicio')}" th:errors="*{fechaInicio}"></div>
 
         <label for="fechaFin">Fecha de fin</label>
         <input type="date" th:field="*{fechaFin}" required>
-        <div class="error-message" th:if="${#fields.hasErrors('fechaFin')}" th:errors="*{fechaFin}"></div>
+
 
         <label for="generoLibro">Género</label>
         <select th:field="*{generoLibro}" required>
@@ -167,7 +166,10 @@
                 th:text="${#strings.replace(genero.name(), '_', ' ')}">
             </option>
         </select>
-        <div class="error-message" th:if="${#fields.hasErrors('generoLibro')}" th:errors="*{generoLibro}"></div>
+
+        <div th:if="${invalid_date}" class="error-message">
+            <p th:text="${invalid_date}"></p>
+        </div>
 
         <button type="submit" class="entrar">Guardar Lectura</button>
     </form>

@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import com.biblioteca.biblioteca_digital.enums.GeneroLibro;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public class AddLecturaDTO {
 
@@ -17,13 +16,8 @@ public class AddLecturaDTO {
     @NotBlank(message = "El nombre del autor es obligatorio.")
     private String autor;
 
-    @NotNull(message = "El género del libro es obligatorio.")
     private GeneroLibro generoLibro;
-
-    @NotNull(message = "La fecha en la que comenzaste el libro es obligatoria.")
     private LocalDate fechaInicio;
-
-    @NotNull(message = "La fecha en la que finalizaste el libro es obligatoria.")
     private LocalDate fechaFin;
 
     public AddLecturaDTO() {

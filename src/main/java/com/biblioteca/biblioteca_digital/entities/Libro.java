@@ -15,6 +15,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -38,14 +39,14 @@ public class Libro {
     @NotBlank(message = "El autor es requerido")
     private String autor;
 
-    @NotBlank(message = "El género es requerido")
+    @NotNull(message = "El género es requerido")
     @Enumerated(EnumType.STRING)
     private GeneroLibro generoLibro;
 
-    @NotBlank(message = "La fecha de inicio es requerida")
+    @NotNull(message = "La fecha de inicio es requerida")
     private LocalDate fechaInicio;
 
-    @NotBlank(message = "La fecha de fin es requerida")
+    @NotNull(message = "La fecha de fin es requerida")
     private LocalDate fechaFin;
 
     @ManyToOne(fetch = FetchType.LAZY)
