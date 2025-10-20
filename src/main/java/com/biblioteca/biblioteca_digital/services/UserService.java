@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.biblioteca.biblioteca_digital.entities.Libro;
@@ -16,7 +18,7 @@ import com.biblioteca.biblioteca_digital.exceptions.Exceptions.LibroNotFound;
 import com.biblioteca.biblioteca_digital.exceptions.Exceptions.UserNotFound;
 import com.biblioteca.biblioteca_digital.repositories.LibroRepository;
 import com.biblioteca.biblioteca_digital.repositories.UserRepository;
-import com.biblioteca.biblioteca_digital.security.Encoder;
+import com.biblioteca.biblioteca_digital.security.PasswordConfig;
 
 @Service
 public class UserService {
@@ -29,6 +31,9 @@ public class UserService {
 
     @Autowired
     private LibroService libroService;
+
+    @Autowired
+    private PasswordConfig passwordConfig;
 
     public Optional<User> findById(Long id) {
         Optional<User> usuario = userRepository.findById(id);
@@ -54,19 +59,27 @@ public class UserService {
                 .nombre(nombre.trim())
                 .apellidos(apellidos.trim())
                 .correo(correo.trim())
-                .password(Encoder.passwordEncoder().encode(password))
+                .password(passwordConfig.passwordEncoder().encode(password))
                 .libros(libros)
                 .build();
         userRepository.save(usuario);
 
     }
 
-    public Long signIn(String correo, String password) {
-        User usuario = userRepository.findByCorreo(correo);
-        if (usuario != null && Encoder.passwordEncoder().matches(password, usuario.getPassword())) {
-            return usuario.getId();
+    public User getByCorreo(String correo) {
+        return userRepository.findByCorreo(correo);
+    }
+
+    public User getUsuarioLogado() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || auth.getName() == null) {
+            return null; // no hay usuario logado
         }
-        return 0L;
+        return getByCorreo(auth.getName());
+    }
+
+    public boolean checkPassword(String rawPassword, String encodedPassword) {
+        return passwordConfig.passwordEncoder().matches(rawPassword, encodedPassword);
     }
 
     public boolean userFound(String correo) {

@@ -27,9 +27,7 @@ public class HomeController {
     private UserService userService;
 
     @GetMapping("/home")
-    public String getHome(@RequestParam Long id, Model model) {
-        System.out.println("ID recibido: " + id);
-        model.addAttribute("idUsuario", id);
+    public String getHome() {
         return "home/home";
     }
 
