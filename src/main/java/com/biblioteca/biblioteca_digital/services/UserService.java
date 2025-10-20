@@ -73,7 +73,7 @@ public class UserService {
     public User getUsuarioLogado() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth == null || auth.getName() == null) {
-            return null; // no hay usuario logado
+            return null;
         }
         return getByCorreo(auth.getName());
     }

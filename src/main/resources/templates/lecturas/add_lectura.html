@@ -144,8 +144,6 @@
     <form th:action="@{/add}" th:object="${lectura}" method="post">
         <h3>Añadir Lectura</h3>
 
-        <input type="hidden" th:field="*{id}" placeholder="Ej: Cien años de soledad" required>
-
         <label for="titulo">Título</label>
         <input type="text" th:field="*{titulo}" placeholder="Ej: Cien años de soledad" required>
         <div class="error-message" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
