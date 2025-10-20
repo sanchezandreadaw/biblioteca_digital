@@ -197,7 +197,16 @@
             <h2>BibliotecaDigital</h2>
             <nav class="menu">
                 <a href="#" class="active"><i class="fas fa-book-open"></i> Mis Lecturas</a>
-                <a href="#"><i class="fas fa-chart-bar"></i> Ver lecturas totales</a>
+                <a th:href="@{/view_lecturas_totales}">
+                    <i class="fas fa-chart-bar"></i> Logros literarios
+                </a>
+                <a th:href="@{/consultar_lecturas_mes}" class="active"><i class="fas fa-calendar-alt"></i> Consultar
+                    lecturas por mes</a>
+                <a th:href="@{/consultar_lecturas_anyo}" class="active"><i class="fas fa-calendar"></i> Consultar
+                    lecturas por año</a>
+                <a th:href="@{/consultar_lecturas_genero}" class="active"><i class="fas fa-tags"></i> Consultar lecturas
+                    por género</a>
+
             </nav>
         </div>
 

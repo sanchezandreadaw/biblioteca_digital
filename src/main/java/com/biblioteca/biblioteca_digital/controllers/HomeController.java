@@ -2,6 +2,7 @@ package com.biblioteca.biblioteca_digital.controllers;
 
 import java.time.LocalDate;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -39,9 +40,39 @@ public class HomeController {
         return "home/home";
     }
 
-    @GetMapping("/lecturas_totales")
-    public String getLecturasTotales() {
-        return "lecturas/lecturas";
+    @GetMapping("/view_lecturas_totales")
+    public String getLecturasTotales(Model model) {
+        User usuario = userService.getUsuarioLogado();
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+        int libros_totales_leidos = usuario.getLibros().size();
+        model.addAttribute("total_leidos", libros_totales_leidos);
+
+        int total_libros_por_mes = userService.obtenerTotalLecturasMensuales(usuario.getId());
+        model.addAttribute("total_leidos_mes", total_libros_por_mes);
+
+        int total_libros_por_anyo = userService.obtenerTotalLecturasAnuales(usuario.getId());
+        model.addAttribute("total_leidos_anyo", total_libros_por_anyo);
+
+        return "lecturas/lecturas_totales";
+    }
+
+    @GetMapping("/consultar_lecturas_mes")
+    public String consultarLecturasPorMes() {
+        return "lecturas/consultar_por_mes";
+    }
+
+    @GetMapping("/consultar_lecturas_anyo")
+    public String consultarLecturasPorAnyo() {
+        return "lecturas/consultar_por_anyo";
+    }
+
+    @GetMapping("/consultar_lecturas_genero")
+    public String consultarLecturasPorGenero(Model model) {
+        List<GeneroLibro> generos = Arrays.asList(GeneroLibro.values());
+        model.addAttribute("generos", generos);
+        return "lecturas/consultar_por_genero";
     }
 
     @GetMapping("/view_add_lectura")

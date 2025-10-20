@@ -132,7 +132,7 @@ public class UserService {
 
     }
 
-    public int obtenerTotalLecturasMensuales(Long id_usuario) throws UserNotFound {
+    public int obtenerTotalLecturasMensuales(Long id_usuario) {
         Optional<User> usuario = findById(id_usuario);
         int mesActual = LocalDate.now().getMonthValue();
         List<Libro> libros_usuario = new ArrayList<>();
@@ -149,7 +149,7 @@ public class UserService {
         return contador;
     }
 
-    public int obtenerTotalLecturasAnuales(Long id_usuario) throws UserNotFound {
+    public int obtenerTotalLecturasAnuales(Long id_usuario) {
 
         Optional<User> usuario = findById(id_usuario);
         int anyoActual = LocalDate.now().getYear();

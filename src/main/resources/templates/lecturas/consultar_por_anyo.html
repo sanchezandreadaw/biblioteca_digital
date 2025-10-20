@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libros por Año - BibliotecaDigital</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #080710;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 50px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .background {
+            position: absolute;
+            width: 480px;
+            height: 520px;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: blur(2px);
+        }
+
+        .background .shape {
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .shape:first-child {
+            background: linear-gradient(#1845ad, #23a2f6);
+            left: -80px;
+            top: -80px;
+        }
+
+        .shape:last-child {
+            background: linear-gradient(to right, #ff512f, #f09819);
+            right: -80px;
+            bottom: -80px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 16px;
+            color: #cfd8dc;
+            letter-spacing: 0.5px;
+        }
+
+        form {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 4px 25px rgba(8, 7, 16, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 400px;
+            margin-bottom: 40px;
+        }
+
+        form label {
+            font-size: 17px;
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        form input[type="number"] {
+            width: 100%;
+            padding: 10px 14px;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        form input[type="number"]:focus {
+            background-color: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 10px rgba(35, 162, 246, 0.4);
+        }
+
+        form button {
+            background: linear-gradient(to right, #1845ad, #23a2f6);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 25px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(35, 162, 246, 0.4);
+        }
+
+        form button:hover {
+            background: linear-gradient(to right, #23a2f6, #ff512f);
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(255, 81, 47, 0.4);
+        }
+
+        .books-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .book-card {
+            background-color: rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            padding: 25px 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(8, 7, 16, 0.6);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            transition: all 0.3s ease;
+        }
+
+        .book-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 0 35px rgba(35, 162, 246, 0.3);
+        }
+
+        .book-card i {
+            font-size: 30px;
+            margin-bottom: 10px;
+            color: #23a2f6;
+        }
+
+        .book-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #fff;
+        }
+
+        .book-card p {
+            font-size: 15px;
+            color: #cfd8dc;
+            margin-bottom: 6px;
+        }
+
+        .back-home {
+            margin-top: 45px;
+            background: linear-gradient(to right, #1845ad, #23a2f6);
+            border: none;
+            border-radius: 30px;
+            padding: 12px 28px;
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(35, 162, 246, 0.4);
+        }
+
+        .back-home:hover {
+            background: linear-gradient(to right, #23a2f6, #ff512f);
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px rgba(255, 81, 47, 0.4);
+        }
+
+        .back-home i {
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <header>
+        <h1>📅 Libros Leídos por Año</h1>
+        <p>Introduce el año para ver todas tus lecturas correspondientes.</p>
+    </header>
+
+    <form id="yearForm" th:action="@{/libros/por-anyo}" method="get">
+        <label for="anyo">Año (ej. 2025):</label>
+        <input type="number" id="anyo" name="anyo" min="1900" max="2100" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    <div class="books-container">
+        <div class="book-card">
+            <i class="fas fa-book"></i>
+            <h3>1984</h3>
+            <p><strong>Autor:</strong> <span>George Orwell</span></p>
+            <p><strong>Género:</strong> <span>Distopía</span></p>
+            <p><strong>Inicio:</strong> <span>2025-01-10</span></p>
+            <p><strong>Fin:</strong> <span>2025-01-20</span></p>
+        </div>
+    </div>
+
+    <a href="#" th:href="@{/home}" class="back-home">
+        <i class="fas fa-home"></i> Volver al inicio
+    </a>
+
+</body>
+
+</html>
