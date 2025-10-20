@@ -28,7 +28,14 @@ public class HomeController {
     private UserService userService;
 
     @GetMapping("/home")
-    public String getHome() {
+    public String getHome(Model model) {
+        User usuario = userService.getUsuarioLogado();
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+        if (usuario.getLibros() != null) {
+            model.addAttribute("libros", usuario.getLibros());
+        }
         return "home/home";
     }
 

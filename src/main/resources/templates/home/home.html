@@ -164,6 +164,29 @@
             background-color: rgba(255, 255, 255, 0.2);
             border-radius: 4px;
         }
+
+        .no-lecturas {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #ddd;
+            height: 60%;
+            gap: 10px;
+        }
+
+        .no-lecturas h2 {
+            color: #23a2f6;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .no-lecturas p {
+            font-size: 16px;
+            color: #aaa;
+            max-width: 400px;
+        }
     </style>
 </head>
 
@@ -191,31 +214,27 @@
             </button>
         </div>
 
-        <section class="cards">
-            <div class="card">
+        <section class="cards" th:if="${libros.size() > 0}">
+            <div class="card" th:each="libro : ${libros}">
                 <div class="actions">
                     <i class="fas fa-edit" title="Editar"></i>
                     <i class="fas fa-trash" title="Borrar"></i>
                 </div>
-                <h3>El nombre del viento</h3>
-                <p><strong>Autor:</strong> Patrick Rothfuss</p>
-                <p><strong>Género:</strong> Fantasía</p>
-                <p><strong>Inicio:</strong> 2025-01-10</p>
-                <p><strong>Fin:</strong> 2025-02-20</p>
-            </div>
+                <h3 th:text="${libro.titulo}"></h3>
+                <p th:text="'Autor: ' + ${libro.autor}"></p>
+                <p th:text="'Género: ' + ${libro.generoLibro}"></p>
+                <p th:text="'Inicio: ' + ${#temporals.format(libro.fechaInicio, 'dd/MM/yyyy')}"></p>
+                <p th:text="'Fin: ' + ${#temporals.format(libro.fechaFin, 'dd/MM/yyyy')}"></p>
 
-            <div class="card">
-                <div class="actions">
-                    <i class="fas fa-edit" title="Editar"></i>
-                    <i class="fas fa-trash" title="Borrar"></i>
-                </div>
-                <h3>1984</h3>
-                <p><strong>Autor:</strong> George Orwell</p>
-                <p><strong>Género:</strong> Distopía</p>
-                <p><strong>Inicio:</strong> 2025-03-01</p>
-                <p><strong>Fin:</strong> 2025-03-25</p>
             </div>
         </section>
+
+        <div class="no-lecturas" th:if="${libros.size() == 0}">
+            <i class="fas fa-book-reader" style="font-size: 50px; color: #23a2f6; margin-bottom: 20px;"></i>
+            <h2>Aún no tienes lecturas añadidas</h2>
+            <p>Haz clic en "Añadir nueva lectura" para comenzar a registrar tus libros favoritos.</p>
+        </div>
+
     </main>
 
 </body>
