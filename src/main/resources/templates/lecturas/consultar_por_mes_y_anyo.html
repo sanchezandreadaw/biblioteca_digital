@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Libros por Año - BibliotecaDigital</title>
+    <title>Libros por Mes y Año - BibliotecaDigital</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -202,11 +202,13 @@
     </div>
 
     <header>
-        <h1>📅 Libros leídos por año</h1>
-        <p>Introduce el año para ver todas tus lecturas correspondientes.</p>
+        <h1>📅 Libros leídos por Mes y Año</h1>
+        <p>Selecciona el mes y el año para ver tus lecturas correspondientes.</p>
     </header>
 
-    <form id="yearForm" th:action="@{/libros/por-anyo}" method="get">
+    <form id="monthYearForm" th:action="@{/libros/por-mes-anyo}" method="get">
+        <label for="mes">Número del mes (1 - 12):</label>
+        <input type="number" id="mes" name="mes" min="1" max="12" required>
         <label for="anyo">Año (ej. 2025):</label>
         <input type="number" id="anyo" name="anyo" min="1900" max="2100" required>
         <button type="submit">Buscar</button>

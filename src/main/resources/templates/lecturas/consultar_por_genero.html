@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Libros por Género - BibliotecaDigital</title>
-
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
         * {
@@ -19,8 +18,8 @@
         }
 
         body {
-            background-color: #080710;
-            color: #ffffff;
+            background: linear-gradient(135deg, #080710, #1c1c2b);
+            color: #fff;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -33,43 +32,56 @@
 
         .background {
             position: absolute;
-            width: 480px;
-            height: 520px;
+            width: 600px;
+            height: 600px;
             left: 50%;
             top: 50%;
             transform: translate(-50%, -50%);
             z-index: -1;
-            filter: blur(2px);
+            filter: blur(3px);
         }
 
         .background .shape {
-            height: 200px;
-            width: 200px;
+            height: 220px;
+            width: 220px;
             position: absolute;
             border-radius: 50%;
+            opacity: 0.7;
+            animation: float 6s ease-in-out infinite alternate;
         }
 
         .shape:first-child {
-            background: linear-gradient(#1845ad, #23a2f6);
-            left: -80px;
-            top: -80px;
+            background: linear-gradient(135deg, #1845ad, #23a2f6);
+            left: -100px;
+            top: -100px;
         }
 
         .shape:last-child {
-            background: linear-gradient(to right, #ff512f, #f09819);
-            right: -80px;
-            bottom: -80px;
+            background: linear-gradient(135deg, #ff512f, #f09819);
+            right: -100px;
+            bottom: -100px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) translateX(0);
+            }
+
+            100% {
+                transform: translateY(20px) translateX(20px);
+            }
         }
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
+            animation: fadeIn 1s ease-in-out;
         }
 
         header h1 {
-            font-size: 36px;
+            font-size: 38px;
             font-weight: 600;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         header p {
@@ -78,33 +90,51 @@
             letter-spacing: 0.5px;
         }
 
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         form {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 25px 30px;
-            backdrop-filter: blur(10px);
+            background-color: rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 30px 35px;
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 25px rgba(8, 7, 16, 0.6);
+            box-shadow: 0 8px 35px rgba(8, 7, 16, 0.6);
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 20px;
             width: 100%;
-            max-width: 700px;
-            margin-bottom: 40px;
+            max-width: 720px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        form:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 45px rgba(35, 162, 246, 0.4);
         }
 
         form label {
             font-size: 17px;
             font-weight: 500;
             color: #ffffff;
+            align-self: flex-start;
             margin-bottom: 8px;
         }
 
         .radio-group {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 15px;
             justify-content: center;
         }
 
@@ -113,7 +143,6 @@
             min-width: 120px;
             display: flex;
             justify-content: center;
-            margin-bottom: 10px;
         }
 
         .radio-group input[type="radio"] {
@@ -122,8 +151,8 @@
 
         .radio-group label {
             background-color: rgba(255, 255, 255, 0.1);
-            padding: 10px 18px;
-            border-radius: 8px;
+            padding: 12px 20px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 15px;
             transition: all 0.3s ease;
@@ -131,31 +160,32 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             text-align: center;
             display: block;
+            min-width: 100px;
         }
 
         .radio-group input[type="radio"]:checked+label {
-            background: linear-gradient(to right, #1845ad, #23a2f6);
+            background: linear-gradient(135deg, #1845ad, #23a2f6);
             border-color: #23a2f6;
             box-shadow: 0 0 20px rgba(35, 162, 246, 0.4);
         }
 
         form button {
-            background: linear-gradient(to right, #1845ad, #23a2f6);
+            background: linear-gradient(135deg, #1845ad, #23a2f6);
             border: none;
-            border-radius: 25px;
-            padding: 10px 25px;
+            border-radius: 30px;
+            padding: 12px 28px;
             color: #ffffff;
             font-size: 16px;
             font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(35, 162, 246, 0.4);
+            box-shadow: 0 0 25px rgba(35, 162, 246, 0.4);
         }
 
         form button:hover:enabled {
-            background: linear-gradient(to right, #23a2f6, #ff512f);
+            background: linear-gradient(135deg, #23a2f6, #ff512f);
             transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(255, 81, 47, 0.4);
+            box-shadow: 0 0 30px rgba(255, 81, 47, 0.5);
         }
 
         form button:disabled {
@@ -163,57 +193,11 @@
             cursor: not-allowed;
         }
 
-        .books-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 25px;
-            width: 100%;
-            max-width: 1000px;
-        }
-
-        .book-card {
-            background-color: rgba(255, 255, 255, 0.12);
-            border-radius: 12px;
-            padding: 25px 20px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 20px rgba(8, 7, 16, 0.6);
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            transition: all 0.3s ease;
-        }
-
-        .book-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 0 35px rgba(35, 162, 246, 0.3);
-        }
-
-        .book-card i {
-            font-size: 30px;
-            margin-bottom: 10px;
-            color: #23a2f6;
-        }
-
-        .book-card h3 {
-            font-size: 20px;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #fff;
-        }
-
-        .book-card p {
-            font-size: 15px;
-            color: #cfd8dc;
-            margin-bottom: 6px;
-        }
-
         .back-home {
-            margin-top: 45px;
-            background: linear-gradient(to right, #1845ad, #23a2f6);
-            border: none;
-            border-radius: 30px;
-            padding: 12px 28px;
+            margin-top: 50px;
+            background: linear-gradient(135deg, #1845ad, #23a2f6);
+            border-radius: 35px;
+            padding: 14px 32px;
             color: #ffffff;
             font-size: 17px;
             font-weight: 500;
@@ -223,13 +207,13 @@
             cursor: pointer;
             text-decoration: none;
             transition: all 0.3s ease;
-            box-shadow: 0 0 20px rgba(35, 162, 246, 0.4);
+            box-shadow: 0 0 25px rgba(35, 162, 246, 0.4);
         }
 
         .back-home:hover {
-            background: linear-gradient(to right, #23a2f6, #ff512f);
+            background: linear-gradient(135deg, #23a2f6, #ff512f);
             transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(255, 81, 47, 0.4);
+            box-shadow: 0 0 30px rgba(255, 81, 47, 0.5);
         }
 
         .back-home i {
@@ -239,6 +223,11 @@
 </head>
 
 <body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
     <header>
         <h1>📚 Libros por Género</h1>
         <p>Selecciona un género para ver todas tus lecturas correspondientes.</p>
@@ -246,24 +235,13 @@
 
     <form id="genreForm">
         <div class="radio-group">
-            <div th:each="genero : ${generos}">
+            <div class="radio-item" th:each="genero : ${generos}">
                 <input type="radio" th:id="${genero}" name="genero" th:value="${genero}" required>
                 <label th:for="${genero}" th:text="${#strings.replace(genero.name(), '_', ' ')}"></label>
             </div>
         </div>
         <button type="submit" id="searchButton" disabled>Buscar</button>
     </form>
-
-    <div class="books-container">
-        <div class="book-card">
-            <i class="fas fa-book"></i>
-            <h3>Cien Años de Soledad</h3>
-            <p><strong>Autor:</strong> <span>Gabriel García Márquez</span></p>
-            <p><strong>Género:</strong> <span>Realismo Mágico</span></p>
-            <p><strong>Inicio:</strong> <span>2025-03-01</span></p>
-            <p><strong>Fin:</strong> <span>2025-03-15</span></p>
-        </div>
-    </div>
 
     <a href="#" th:href="@{/home}" class="back-home">
         <i class="fas fa-home"></i> Volver al inicio
@@ -279,7 +257,6 @@
             });
         });
     </script>
-
 </body>
 
 </html>

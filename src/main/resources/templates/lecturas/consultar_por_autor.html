@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Libros por Año - BibliotecaDigital</title>
+    <title>Libros por Autor - BibliotecaDigital</title>
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -130,7 +130,7 @@
             align-self: flex-start;
         }
 
-        form input[type="number"] {
+        form input[type="text"] {
             width: 100%;
             padding: 12px 16px;
             border: none;
@@ -142,7 +142,7 @@
             transition: all 0.3s ease;
         }
 
-        form input[type="number"]:focus {
+        form input[type="text"]:focus {
             background-color: rgba(255, 255, 255, 0.25);
             box-shadow: 0 0 12px rgba(35, 162, 246, 0.5);
         }
@@ -202,13 +202,13 @@
     </div>
 
     <header>
-        <h1>📅 Libros leídos por año</h1>
-        <p>Introduce el año para ver todas tus lecturas correspondientes.</p>
+        <h1>✏ Libros leídos según el autor</h1>
+        <p>Introduce el nombre del autor para ver tus lecturas correspondientes.</p>
     </header>
 
-    <form id="yearForm" th:action="@{/libros/por-anyo}" method="get">
-        <label for="anyo">Año (ej. 2025):</label>
-        <input type="number" id="anyo" name="anyo" min="1900" max="2100" required>
+    <form id="authorForm" th:action="@{/libros/por-mes}" method="get">
+        <label for="nombre">Nombre del autor:</label>
+        <input type="text" id="nombre" name="nombre" required>
         <button type="submit">Buscar</button>
     </form>
 

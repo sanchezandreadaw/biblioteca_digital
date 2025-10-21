@@ -188,4 +188,15 @@ public class HomeController {
         userService.eliminarLectura(id);
         return "redirect:/home";
     }
+
+    @GetMapping("/view_libros_por_autor")
+    public String getViewConsultarPorAutor() {
+        return "lecturas/consultar_por_autor";
+    }
+
+    @GetMapping("/consultar_por_mes_y_anyo_view")
+    public String getViewConsultarPorMesYAnyo() {
+        return "lecturas/consultar_por_mes_y_anyo";
+    }
+
 }
