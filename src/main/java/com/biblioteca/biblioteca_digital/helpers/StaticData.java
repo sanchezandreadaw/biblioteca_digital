@@ -101,4 +101,50 @@ public class StaticData {
         return mes;
     }
 
+    public static String formatMonth(int mes) {
+        String mes_string = "";
+        switch (mes) {
+            case 1:
+                mes_string = "enero";
+                break;
+            case 2:
+                mes_string = "febrero";
+                break;
+            case 3:
+                mes_string = "marzo";
+                break;
+            case 4:
+                mes_string = "abril";
+                break;
+            case 5:
+                mes_string = "mayo";
+                break;
+            case 6:
+                mes_string = "junio";
+                break;
+            case 7:
+                mes_string = "julio";
+                break;
+            case 8:
+                mes_string = "agosto";
+                break;
+            case 9:
+                mes_string = "septiembre";
+                break;
+            case 10:
+                mes_string = "octubre";
+                break;
+            case 11:
+                mes_string = "noviembre";
+                break;
+            case 12:
+                mes_string = "diciembre";
+                break;
+            default:
+                mes_string = "Desconocido";
+                break;
+        }
+        return mes_string;
+    }
+
 }

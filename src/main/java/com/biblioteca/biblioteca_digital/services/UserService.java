@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.biblioteca.biblioteca_digital.entities.Libro;
 import com.biblioteca.biblioteca_digital.entities.User;
 import com.biblioteca.biblioteca_digital.enums.GeneroLibro;
-import com.biblioteca.biblioteca_digital.exceptions.Exceptions.InvalidMonth;
 import com.biblioteca.biblioteca_digital.exceptions.Exceptions.UserNotFound;
 import com.biblioteca.biblioteca_digital.repositories.LibroRepository;
 import com.biblioteca.biblioteca_digital.repositories.UserRepository;
@@ -157,10 +156,7 @@ public class UserService {
         return contador;
     }
 
-    public List<Libro> getLecturasMensuales(Long id_usuario, int mes) throws InvalidMonth, UserNotFound {
-        if (mes < 0 || mes > 12) {
-            throw new InvalidMonth();
-        }
+    public List<Libro> getLecturasMensuales(Long id_usuario, int mes) {
         Optional<User> usuario = findById(id_usuario);
         List<Libro> lecturas_usuario = new ArrayList<>();
         List<Libro> lecturas_mensuales = new ArrayList<>();
@@ -171,7 +167,6 @@ public class UserService {
                     .toList();
 
         }
-
         return lecturas_mensuales;
 
     }

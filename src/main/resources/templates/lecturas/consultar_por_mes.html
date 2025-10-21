@@ -206,7 +206,7 @@
         <p>Introduce el número del mes para ver tus lecturas correspondientes.</p>
     </header>
 
-    <form id="monthForm" th:action="@{/libros/por-mes}" method="get">
+    <form id="monthForm" th:action="@{/post_lecturas_por_mes}" method="post">
         <label for="mes">Número del mes (1 - 12):</label>
         <input type="number" id="mes" name="mes" min="1" max="12" required>
         <button type="submit">Buscar</button>
