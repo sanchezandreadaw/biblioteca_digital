@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import com.biblioteca.biblioteca_digital.enums.GeneroLibro;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 public class UpdateLecturaDTO {
 
@@ -16,13 +17,13 @@ public class UpdateLecturaDTO {
     @NotBlank(message = "El autor del libro es requerido.")
     private String autor;
 
-    @NotBlank(message = "El género del libro es requerido.")
+    @NotNull(message = "El género del libro es requerido.")
     private GeneroLibro generoLibro;
 
-    @NotBlank(message = "La fecha en la que comenzaste el libro es requerida.")
+    @NotNull(message = "La fecha en la que comenzaste el libro es requerida.")
     private LocalDate fechaInicio;
 
-    @NotBlank(message = "La fechaaa en la que finalizaste el libro es requerida")
+    @NotNull(message = "La fechaaa en la que finalizaste el libro es requerida")
     private LocalDate fechaFin;
 
     public UpdateLecturaDTO() {

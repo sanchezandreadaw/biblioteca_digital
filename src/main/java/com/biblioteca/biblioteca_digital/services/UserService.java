@@ -14,7 +14,6 @@ import com.biblioteca.biblioteca_digital.entities.Libro;
 import com.biblioteca.biblioteca_digital.entities.User;
 import com.biblioteca.biblioteca_digital.enums.GeneroLibro;
 import com.biblioteca.biblioteca_digital.exceptions.Exceptions.InvalidMonth;
-import com.biblioteca.biblioteca_digital.exceptions.Exceptions.LibroNotFound;
 import com.biblioteca.biblioteca_digital.exceptions.Exceptions.UserNotFound;
 import com.biblioteca.biblioteca_digital.repositories.LibroRepository;
 import com.biblioteca.biblioteca_digital.repositories.UserRepository;
@@ -106,30 +105,21 @@ public class UserService {
 
     public void updateLectura(Long id_libro, String titulo, String autor, GeneroLibro genero, LocalDate fechaInicio,
             LocalDate fechaFin) {
-        Libro libro;
-        try {
-            libro = libroService.findById(id_libro);
-            libro.setTitulo(titulo.trim());
-            libro.setAutor(autor.trim());
-            libro.setGeneroLibro(genero);
-            libro.setFechaInicio(fechaInicio);
-            libro.setFechaFin(fechaFin);
+        Optional<Libro> libro;
 
-            libroRepository.save(libro);
-        } catch (LibroNotFound e) {
-            e.printStackTrace();
-        }
+        libro = libroService.findById(id_libro);
+        libro.get().setTitulo(titulo.trim());
+        libro.get().setAutor(autor.trim());
+        libro.get().setGeneroLibro(genero);
+        libro.get().setFechaInicio(fechaInicio);
+        libro.get().setFechaFin(fechaFin);
+        libroRepository.save(libro.get());
 
     }
 
     public void eliminarLectura(Long id_libro) {
-        try {
-            Libro libro = libroService.findById(id_libro);
-            libroRepository.delete(libro);
-        } catch (LibroNotFound e) {
-            e.printStackTrace();
-        }
-
+        Optional<Libro> libro = libroService.findById(id_libro);
+        libroRepository.delete(libro.get());
     }
 
     public int obtenerTotalLecturasMensuales(Long id_usuario) {
