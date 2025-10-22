@@ -206,7 +206,7 @@
         <p>Selecciona el mes y el año para ver tus lecturas correspondientes.</p>
     </header>
 
-    <form id="monthYearForm" th:action="@{/libros/por-mes-anyo}" method="get">
+    <form id="monthYearForm" th:action="@{/post_lecturas_mes_y_anyo}" method="post">
         <label for="mes">Número del mes (1 - 12):</label>
         <input type="number" id="mes" name="mes" min="1" max="12" required>
         <label for="anyo">Año (ej. 2025):</label>

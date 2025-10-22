@@ -186,4 +186,18 @@ public class UserService {
         return lecturas_anuales;
 
     }
+
+    public List<Libro> getLecturasByMesAndByAnyo(Long idUsuario, int mes, int year) {
+        Optional<User> usuario = findById(idUsuario);
+        List<Libro> lecturas_usuario = new ArrayList<>();
+        List<Libro> lecturas_x_mes_anyo = new ArrayList<>();
+
+        if (usuario.get().getLibros() != null) {
+            lecturas_usuario.addAll(usuario.get().getLibros());
+            lecturas_x_mes_anyo = lecturas_usuario.stream().filter(
+                    (libro) -> libro.getFechaFin().getMonthValue() == mes && libro.getFechaFin().getYear() == year)
+                    .toList();
+        }
+        return lecturas_x_mes_anyo;
+    }
 }

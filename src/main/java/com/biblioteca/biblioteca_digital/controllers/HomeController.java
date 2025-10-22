@@ -238,4 +238,23 @@ public class HomeController {
         return "lecturas/consultar_por_mes_y_anyo";
     }
 
+    @PostMapping("/post_lecturas_mes_y_anyo")
+    public String postLecturasMesAnyo(@RequestParam("mes") int mes, @RequestParam("anyo") int anyo) {
+        return "redirect:/get_result_mes_y_anyo?mes=" + mes + "&anyo=" + anyo;
+    }
+
+    @GetMapping("/get_result_mes_y_anyo")
+    public String getResultMesAnyo(@RequestParam("mes") int mes, @RequestParam("anyo") int anyo, Model model) {
+        User usuario = userService.getUsuarioLogado();
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+        List<Libro> libros = userService.getLecturasByMesAndByAnyo(usuario.getId(), mes, anyo);
+        String mes_string = StaticData.formatMonth(mes);
+        model.addAttribute("mes_string", mes_string);
+        model.addAttribute("anyo", anyo);
+        model.addAttribute("libros", libros);
+        return "result/result_mes_y_anyo";
+    }
+
 }
