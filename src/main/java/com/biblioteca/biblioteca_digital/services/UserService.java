@@ -1,5 +1,6 @@
 package com.biblioteca.biblioteca_digital.services;
 
+import java.text.Normalizer;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -213,4 +214,36 @@ public class UserService {
         }
         return lecturas_filtradas;
     }
+
+    public List<Libro> getLecturasPorAutor(Long idUsuario, String autor) {
+        Optional<User> usuario = findById(idUsuario);
+        List<Libro> lecturas_filtradas = new ArrayList<>();
+
+        if (usuario.isPresent() && usuario.get().getLibros() != null) {
+            List<Libro> lecturas_usuario = usuario.get().getLibros();
+
+            String nombre_normalizado = Normalizer.normalize(autor, Normalizer.Form.NFD)
+                    .replaceAll("\\p{M}", "")
+                    .trim()
+                    .toLowerCase();
+
+            lecturas_filtradas = lecturas_usuario.stream()
+                    .filter(libro -> {
+                        String autorLibro = libro.getAutor();
+                        if (autorLibro == null)
+                            return false;
+
+                        String autor_normalizado = Normalizer.normalize(autorLibro, Normalizer.Form.NFD)
+                                .replaceAll("\\p{M}", "")
+                                .trim()
+                                .toLowerCase();
+
+                        return autor_normalizado.equals(nombre_normalizado);
+                    })
+                    .toList();
+        }
+
+        return lecturas_filtradas;
+    }
+
 }

@@ -206,9 +206,9 @@
         <p>Introduce el nombre del autor para ver tus lecturas correspondientes.</p>
     </header>
 
-    <form id="authorForm" th:action="@{/libros/por-mes}" method="get">
+    <form id="authorForm" th:action="@{/post_libros_por_autor}" method="post">
         <label for="nombre">Nombre del autor:</label>
-        <input type="text" id="nombre" name="nombre" required>
+        <input type="text" id="nombre" name="autor" required>
         <button type="submit">Buscar</button>
     </form>
 

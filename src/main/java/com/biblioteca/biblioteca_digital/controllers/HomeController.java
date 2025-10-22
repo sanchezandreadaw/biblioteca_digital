@@ -251,6 +251,23 @@ public class HomeController {
         return "lecturas/consultar_por_autor";
     }
 
+    @PostMapping("/post_libros_por_autor")
+    public String postLibrosPorAutor(@RequestParam("autor") String autor) {
+        return "redirect:/get_result_libros_por_autor?autor=" + autor;
+    }
+
+    @GetMapping("/get_result_libros_por_autor")
+    public String getResultLibrosPorAutor(@RequestParam("autor") String autor, Model model) {
+        User usuario = userService.getUsuarioLogado();
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+        List<Libro> libros = userService.getLecturasPorAutor(usuario.getId(), autor);
+        model.addAttribute("libros", libros);
+        model.addAttribute("autor", autor);
+        return "result/result_lecturas_por_autor";
+    }
+
     @GetMapping("/consultar_por_mes_y_anyo_view")
     public String getViewConsultarPorMesYAnyo() {
         return "lecturas/consultar_por_mes_y_anyo";

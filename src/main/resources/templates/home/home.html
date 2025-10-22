@@ -155,31 +155,50 @@
         }
 
         .card .actions {
-            position: absolute;
-            top: 15px;
-            right: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            /* espacio entre botones */
+            margin-top: 15px;
         }
 
-        .card .actions i {
-            color: #eaf0fb;
-            margin-left: 8px;
+        .card .actions button {
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: #fff;
             cursor: pointer;
-            transition: color 0.2s;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.2s, box-shadow 0.2s;
         }
 
         .card .actions button i {
-            font-size: 18px;
-            color: #eaf0fb;
-            transition: color 0.2s;
+            font-size: 16px;
         }
 
-        .card .actions button:hover i {
-            color: #f09819;
+
+        .card .actions .edit-btn {
+            background-color: #23a2f6;
         }
 
-        .card .actions i:hover {
-            color: #f09819;
+        .card .actions .edit-btn:hover {
+            background-color: #1845ad;
+            transform: translateY(-2px);
         }
+
+
+        .card .actions .delete-btn {
+            background-color: #f09819;
+        }
+
+        .card .actions .delete-btn:hover {
+            background-color: #ff512f;
+            transform: translateY(-2px);
+        }
+
 
         ::-webkit-scrollbar {
             width: 8px;
@@ -255,25 +274,24 @@
 
         <section class="cards" th:if="${libros.size() > 0}">
             <div class="card" th:each="libro : ${libros}">
-
-                <div class="actions">
-                    <form th:action="@{/view_update_lecturas}" method="get">
-                        <input type="hidden" name="id" th:value="${libro.id}">
-                        <button type="submit"><i class="fas fa-edit" title="Editar"></i></button>
-                    </form>
-                    <form th:action="@{/delete}" method="post" onsubmit="return confirmDelete(this)">
-                        <input type="hidden" name="id" th:value="${libro.id}">
-                        <button type="submit"><i class="fas fa-trash" title="Borrar"></i></button>
-                    </form>
-
-                </div>
                 <h3 th:text="${libro.titulo}"></h3>
                 <p th:text="'Autor: ' + ${libro.autor}"></p>
                 <p th:text="'Género: ' + ${libro.generoLibro}"></p>
                 <p th:text="'Inicio: ' + ${#temporals.format(libro.fechaInicio, 'dd/MM/yyyy')}"></p>
                 <p th:text="'Fin: ' + ${#temporals.format(libro.fechaFin, 'dd/MM/yyyy')}"></p>
 
+                <div class="actions">
+                    <form th:action="@{/view_update_lecturas}" method="get">
+                        <input type="hidden" name="id" th:value="${libro.id}">
+                        <button type="submit" class="edit-btn"><i class="fas fa-edit"></i> Editar</button>
+                    </form>
+                    <form th:action="@{/delete}" method="post" onsubmit="return confirmDelete(this)">
+                        <input type="hidden" name="id" th:value="${libro.id}">
+                        <button type="submit" class="delete-btn"><i class="fas fa-trash"></i> Borrar</button>
+                    </form>
+                </div>
             </div>
+
         </section>
 
         <div class="no-lecturas" th:if="${libros.size() == 0}">
