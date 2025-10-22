@@ -158,7 +158,6 @@
             display: flex;
             justify-content: center;
             gap: 15px;
-            /* espacio entre botones */
             margin-top: 15px;
         }
 
@@ -276,7 +275,7 @@
             <div class="card" th:each="libro : ${libros}">
                 <h3 th:text="${libro.titulo}"></h3>
                 <p th:text="'Autor: ' + ${libro.autor}"></p>
-                <p th:text="'Género: ' + ${libro.generoLibro}"></p>
+                <p th:text="'Género: ' + ${libro.genero}"></p>
                 <p th:text="'Inicio: ' + ${#temporals.format(libro.fechaInicio, 'dd/MM/yyyy')}"></p>
                 <p th:text="'Fin: ' + ${#temporals.format(libro.fechaFin, 'dd/MM/yyyy')}"></p>
 
