@@ -171,13 +171,8 @@ public class UserService {
 
     }
 
-    public List<Libro> getLecturasAnuales(Long id_usuario, int year) throws UserNotFound, Exception {
+    public List<Libro> getLecturasAnuales(Long id_usuario, int year) {
         Optional<User> usuario = findById(id_usuario);
-        int anyoActual = LocalDate.now().getYear();
-        if (year < 1999 || year > anyoActual) {
-            throw new Exception("El año no puede ser inferior a 1999 ni superior al año actual");
-        }
-
         List<Libro> lecturas_usuario = new ArrayList<>();
         List<Libro> lecturas_anuales = new ArrayList<>();
 

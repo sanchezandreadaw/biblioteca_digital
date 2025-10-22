@@ -201,11 +201,11 @@
 
     <main class="content">
         <div class="header">
-            <h1>Mis lecturas del mes de <span th:text="${mes_string}"></span></h1>
+            <h1>Mis lecturas del año <span th:text="${anyo}"></span></h1>
         </div>
 
         <div class="month-summary" th:if="${libros.size() > 0}"
-            th:text="'En el mes de ' + ${mes_string} + ' has leído ' + ${libros.size()} + ' libro(s).'">
+            th:text="'En el año ' + ${anyo} + ' has leído ' + ${libros.size()} + ' libro(s).'">
         </div>
 
         <section class="cards" th:if="${libros.size() > 0}">
@@ -220,8 +220,8 @@
 
         <div class="no-lecturas" th:if="${libros.size() == 0}">
             <i class="fas fa-book-reader" style="font-size: 50px; color: #23a2f6; margin-bottom: 20px;"></i>
-            <h2>No hay lecturas en este mes</h2>
-            <p>Parece que no has registrado lecturas para el mes de <span th:text="${mes_string}"></span> Añade algunas
+            <h2>No hay lecturas en este año</h2>
+            <p>Parece que no has registrado lecturas en el año <span th:text="${anyo}"></span> Añade algunas
                 para llevar un control de tus libros.
             </p>
         </div>
