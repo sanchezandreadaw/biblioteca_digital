@@ -233,7 +233,7 @@
         <p>Selecciona un género para ver todas tus lecturas correspondientes.</p>
     </header>
 
-    <form id="genreForm">
+    <form id="genreForm" method="post" th:action="@{/post_consultar_por_genero}">
         <div class="radio-group">
             <div class="radio-item" th:each="genero : ${generos}">
                 <input type="radio" th:id="${genero}" name="genero" th:value="${genero}" required>

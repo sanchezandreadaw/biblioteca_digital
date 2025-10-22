@@ -126,6 +126,24 @@ public class HomeController {
         return "lecturas/consultar_por_genero";
     }
 
+    @PostMapping("/post_consultar_por_genero")
+    public String postConsultarPorGenero(@RequestParam("genero") GeneroLibro genero) {
+        return "redirect:/get_result_by_genero?genero=" + genero;
+    }
+
+    @GetMapping("/get_result_by_genero")
+    public String getResultByGenero(@RequestParam("genero") GeneroLibro genero, Model model) {
+        User usuario = userService.getUsuarioLogado();
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+        List<Libro> libros = userService.getLecturasPorGenero(usuario.getId(), genero);
+        String genero_string = StaticData.formatGeneros(genero);
+        model.addAttribute("genero", genero_string);
+        model.addAttribute("libros", libros);
+        return "result/result_lecturas_por_genero";
+    }
+
     @GetMapping("/view_add_lectura")
     public String getFormToAdd(Model model) {
         if (!model.containsAttribute("lectura")) {

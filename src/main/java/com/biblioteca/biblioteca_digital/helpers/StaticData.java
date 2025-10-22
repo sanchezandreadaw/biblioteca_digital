@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
+import com.biblioteca.biblioteca_digital.enums.GeneroLibro;
+
 public class StaticData {
 
     public static final DateTimeFormatter FORMATO_FECHA = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -145,6 +147,93 @@ public class StaticData {
                 break;
         }
         return mes_string;
+    }
+
+    public static String formatGeneros(GeneroLibro generoLibro) {
+        String generoString;
+
+        switch (generoLibro) {
+            case FICCION:
+                generoString = "Ficción";
+                break;
+            case NO_FICCION:
+                generoString = "No ficción";
+                break;
+            case MISTERIO:
+                generoString = "Misterio";
+                break;
+            case FANTASIA:
+                generoString = "Fantasía";
+                break;
+            case CIENCIA_FICCION:
+                generoString = "Ciencia ficción";
+                break;
+            case ROMANCE:
+                generoString = "Romance";
+                break;
+            case TERROR:
+                generoString = "Terror";
+                break;
+            case SUSPENSO:
+                generoString = "Suspenso";
+                break;
+            case BIOGRAFIA:
+                generoString = "Biografía";
+                break;
+            case HISTORIA:
+                generoString = "Historia";
+                break;
+            case POESIA:
+                generoString = "Poesía";
+                break;
+            case AUTOAYUDA:
+                generoString = "Autoayuda";
+                break;
+            case CLASICOS:
+                generoString = "Clásicos";
+                break;
+            case AVENTURAS:
+                generoString = "Aventuras";
+                break;
+            case INFANTIL:
+                generoString = "Infantil";
+                break;
+            case JUVENIL:
+                generoString = "Juvenil";
+                break;
+            case ENSAYO:
+                generoString = "Ensayo";
+                break;
+            case DRAMA:
+                generoString = "Drama";
+                break;
+            case HUMOR:
+                generoString = "Humor";
+                break;
+            case RELIGION:
+                generoString = "Religión";
+                break;
+            case TECNICO:
+                generoString = "Técnico";
+                break;
+            case POLICIAL:
+                generoString = "Policial";
+                break;
+            case THRILLER:
+                generoString = "Thriller";
+                break;
+            case NOVELA_GRAFICA:
+                generoString = "Novela gráfica";
+                break;
+            case OTRO:
+                generoString = "Otro";
+                break;
+            default:
+                generoString = "Desconocido";
+                break;
+        }
+
+        return generoString;
     }
 
 }

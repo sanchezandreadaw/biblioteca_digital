@@ -200,4 +200,17 @@ public class UserService {
         }
         return lecturas_x_mes_anyo;
     }
+
+    public List<Libro> getLecturasPorGenero(Long idUsuario, GeneroLibro generoLibro) {
+        Optional<User> usuario = findById(idUsuario);
+        List<Libro> lecturas_usuario = new ArrayList<>();
+        List<Libro> lecturas_filtradas = new ArrayList<>();
+
+        if (usuario.get().getLibros() != null) {
+            lecturas_usuario.addAll(usuario.get().getLibros());
+            lecturas_filtradas = lecturas_usuario.stream().filter((libro) -> libro.getGeneroLibro() == generoLibro)
+                    .toList();
+        }
+        return lecturas_filtradas;
+    }
 }
