@@ -46,6 +46,23 @@ public class HomeController {
         return "home/home";
     }
 
+    @GetMapping("/perfil")
+    public String getViewProfile(Model model) {
+        User usuario = userService.getUsuarioLogado();
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+        String nombre = usuario.getNombre();
+        String apellidos = usuario.getApellidos();
+        String correo = usuario.getCorreo();
+
+        model.addAttribute("nombre", nombre);
+        model.addAttribute("apellidos", apellidos);
+        model.addAttribute("correo", correo);
+
+        return "perfil/datos_perfil.html";
+    }
+
     @GetMapping("/view_lecturas_totales")
     public String getLecturasTotales(Model model) {
         User usuario = userService.getUsuarioLogado();

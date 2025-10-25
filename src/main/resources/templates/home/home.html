@@ -230,6 +230,36 @@
             color: #aaa;
             max-width: 400px;
         }
+
+        .user-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #23a2f6;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 10px rgba(8, 7, 16, 0.4);
+        }
+
+        .user-btn:hover {
+            background: linear-gradient(135deg, #1845ad, #23a2f6);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(35, 162, 246, 0.6);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
     </style>
 </head>
 
@@ -259,23 +289,33 @@
         </div>
 
         <div class="logout">
-            <button onclick="window.location.href='/logout'">Cerrar sesión</button>
+            <button th:onclick="|window.location.href='@{/login}'|">Cerrar sesión</button>
         </div>
     </aside>
 
     <main class="content">
         <div class="header">
             <h1>Mis Lecturas</h1>
-            <button type="button" class="add-btn" th:onclick="|window.location.href='@{/view_add_lectura}'|" |>
-                <i class="fas fa-plus"></i> Añadir nueva lectura
-            </button>
+
+            <div class="header-actions">
+                <button type="button" class="add-btn" th:onclick="|window.location.href='@{/view_add_lectura}'|">
+                    <i class="fas fa-plus"></i> Añadir nueva lectura
+                </button>
+                Mi perfil
+
+                <button type="button" class="user-btn" th:onclick="|window.location.href='@{/perfil}'|">
+                    <i class="fas fa-user"></i>
+                </button>
+
+            </div>
         </div>
+
 
         <section class="cards" th:if="${libros.size() > 0}">
             <div class="card" th:each="libro : ${libros}">
                 <h3 th:text="${libro.titulo}"></h3>
                 <p th:text="'Autor: ' + ${libro.autor}"></p>
-                <p th:text="'Género: ' + ${libro.genero}"></p>
+                <p th:text="'Género: ' + ${libro.generoLibro}"></p>
                 <p th:text="'Inicio: ' + ${#temporals.format(libro.fechaInicio, 'dd/MM/yyyy')}"></p>
                 <p th:text="'Fin: ' + ${#temporals.format(libro.fechaFin, 'dd/MM/yyyy')}"></p>
 

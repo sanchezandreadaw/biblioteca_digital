@@ -65,6 +65,16 @@ public class UserService {
 
     }
 
+    public void updateUser(Long idUsuario, String nombre, String apellidos, String correo, String password) {
+        Optional<User> usuario = userRepository.findById(idUsuario);
+        usuario.get().setNombre(nombre);
+        usuario.get().setApellidos(apellidos);
+        usuario.get().setCorreo(correo);
+        usuario.get().setPassword(passwordConfig.passwordEncoder().encode(password));
+        userRepository.save(usuario.get());
+
+    }
+
     public User getByCorreo(String correo) {
         return userRepository.findByCorreo(correo);
     }
