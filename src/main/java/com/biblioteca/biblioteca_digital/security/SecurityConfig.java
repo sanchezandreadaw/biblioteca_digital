@@ -17,6 +17,7 @@ public class SecurityConfig {
                 http
                                 .authorizeHttpRequests(auth -> auth
                                                 .requestMatchers(
+                                                                "/",
                                                                 "/login",
                                                                 "/registro",
                                                                 "/validar_credenciales",
@@ -28,10 +29,6 @@ public class SecurityConfig {
                                 .formLogin(form -> form
                                                 .loginPage("/login")
                                                 .defaultSuccessUrl("/home", true)
-                                                .permitAll())
-                                .logout(logout -> logout
-                                                .logoutUrl("/login")
-                                                .logoutSuccessUrl("/login/login")
                                                 .permitAll());
 
                 return http.build();
