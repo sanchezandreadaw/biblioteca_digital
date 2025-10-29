@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Añadir Lectura</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style media="screen">
+        *,
+        *:before,
+        *:after {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #080710;
+        }
+
+        .background {
+            width: 430px;
+            height: 520px;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 50%;
+        }
+
+        .background .shape {
+            height: 200px;
+            width: 200px;
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .shape:first-child {
+            background: linear-gradient(#1845ad, #23a2f6);
+            left: -80px;
+            top: -80px;
+        }
+
+        .shape:last-child {
+            background: linear-gradient(to right, #ff512f, #f09819);
+            right: -30px;
+            bottom: -80px;
+        }
+
+        form {
+            width: 400px;
+            background-color: rgba(255, 255, 255, 0.13);
+            position: absolute;
+            transform: translate(-50%, -50%);
+            top: 50%;
+            left: 50%;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 40px rgba(8, 7, 16, 0.6);
+            padding: 50px 35px;
+        }
+
+        form * {
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            outline: none;
+            border: none;
+        }
+
+        form h3 {
+            font-size: 28px;
+            font-weight: 500;
+            line-height: 38px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        input,
+        select {
+            display: block;
+            height: 45px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.07);
+            border-radius: 3px;
+            padding: 0 10px;
+            margin-top: 8px;
+            font-size: 14px;
+            font-weight: 300;
+            color: #fff;
+        }
+
+        select option {
+            color: #080710;
+        }
+
+        ::placeholder {
+            color: #e5e5e5;
+        }
+
+        .entrar {
+            margin-top: 25px;
+            width: 100%;
+            background-color: #ffffff;
+            color: #080710;
+            padding: 15px 0;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .entrar:hover {
+            background-color: #e5e5e5;
+        }
+
+        form h3 {
+            font-size: 28px;
+            font-weight: 600;
+            line-height: 38px;
+            text-align: center;
+            margin-bottom: 10px;
+
+        }
+
+        .error-message {
+            font-size: 13px;
+            margin-top: 4px;
+            text-align: left;
+        }
+
+        .error-message,
+        .error-message * {
+            color: #ff6b6b !important;
+        }
+
+        .volver {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: #cfd8dc;
+            font-size: 14px;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .volver:hover {
+            color: #ffffff;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background">
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <form th:action="@{/add}" th:object="${lectura}" method="post">
+        <h3>Añadir Lectura</h3>
+
+        <label for="titulo">Título</label>
+        <input type="text" th:field="*{titulo}" placeholder="Ej: Cien años de soledad" required>
+        <div class="error-message" th:if="${#fields.hasErrors('titulo')}" th:errors="*{titulo}"></div>
+
+        <label for="autor">Autor</label>
+        <input type="text" th:field="*{autor}" placeholder="Ej: Gabriel García Márquez" required>
+        <div class="error-message" th:if="${#fields.hasErrors('autor')}" th:errors="*{autor}"></div>
+
+        <label for="fechaInicio">Fecha de inicio</label>
+        <input type="date" th:field="*{fechaInicio}" required>
+
+        <label for="fechaFin">Fecha de fin</label>
+        <input type="date" th:field="*{fechaFin}" required>
+
+
+        <label for="generoLibro">Género</label>
+        <select th:field="*{generoLibro}" required>
+            <option value="" disabled selected>Selecciona un género</option>
+            <option th:each="genero : ${generos}" th:value="${genero}"
+                th:text="${#strings.replace(genero.name(), '_', ' ')}">
+            </option>
+        </select>
+
+        <div th:if="${invalid_date}" class="error-message">
+            <p th:text="${invalid_date}"></p>
+        </div>
+
+        <button type="submit" class="entrar">Guardar Lectura</button>
+        <a th:href="@{/home}" class="volver">← Volver al inicio</a>
+    </form>
+</body>
+
+</html>

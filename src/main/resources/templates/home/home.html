@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home - BibliotecaDigital</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #080710;
+            display: flex;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px 20px;
+            border-right: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #23a2f6;
+        }
+
+        .menu a {
+            display: block;
+            text-decoration: none;
+            color: #eaf0fb;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background 0.3s;
+        }
+
+        .menu a:hover {
+            background: linear-gradient(90deg, #1845ad, #23a2f6);
+            color: #fff;
+        }
+
+        .logout {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .logout button {
+            background: linear-gradient(to right, #ff512f, #f09819);
+            border: none;
+            padding: 10px 25px;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .content {
+            flex: 1;
+            padding: 120px 40px 40px 40px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 14px;
+            border-radius: 6px;
+            color: #fff;
+            width: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #23a2f6;
+            box-shadow: 0 0 8px rgba(35, 162, 246, 0.5);
+        }
+
+        .search-bar button {
+            background: linear-gradient(to right, #1845ad, #23a2f6);
+            border: none;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: linear-gradient(to right, #23a2f6, #1845ad);
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            position: fixed;
+            left: 280px;
+            right: 0;
+            background: rgba(8, 7, 16, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 20px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 500;
+        }
+
+        .add-btn {
+            background: linear-gradient(to right, #1845ad, #23a2f6);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .add-btn:hover {
+            background: linear-gradient(to right, #23a2f6, #1845ad);
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .card .actions form {
+            display: inline;
+        }
+
+        .card .actions button {
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            color: inherit;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 15px rgba(8, 7, 16, 0.6);
+            position: relative;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 20px;
+            color: #23a2f6;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #ddd;
+            margin-bottom: 6px;
+        }
+
+        .card .actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .card .actions button {
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .card .actions button i {
+            font-size: 16px;
+        }
+
+
+        .card .actions .edit-btn {
+            background-color: #23a2f6;
+        }
+
+        .card .actions .edit-btn:hover {
+            background-color: #1845ad;
+            transform: translateY(-2px);
+        }
+
+
+        .card .actions .delete-btn {
+            background-color: #f09819;
+        }
+
+        .card .actions .delete-btn:hover {
+            background-color: #ff512f;
+            transform: translateY(-2px);
+        }
+
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .no-lecturas {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #ddd;
+            height: 60%;
+            gap: 10px;
+        }
+
+        .no-lecturas h2 {
+            color: #23a2f6;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .no-lecturas p {
+            font-size: 16px;
+            color: #aaa;
+            max-width: 400px;
+        }
+
+        .user-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #23a2f6;
+            border-radius: 50%;
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 10px rgba(8, 7, 16, 0.4);
+        }
+
+        .user-btn:hover {
+            background: linear-gradient(135deg, #1845ad, #23a2f6);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(35, 162, 246, 0.6);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <aside class="sidebar">
+        <div>
+            <h2>BibliotecaDigital</h2>
+            <nav class="menu">
+                <a href="#" class="active"><i class="fas fa-book-open"></i> Mis Lecturas</a>
+                <a th:href="@{/view_lecturas_totales}">
+                    <i class="fas fa-chart-bar"></i> Logros literarios
+                </a>
+                <a th:href="@{/consultar_lecturas_mes}" class="active"><i class="fas fa-calendar-alt"></i> Mis
+                    lecturas por mes</a>
+                <a th:href="@{/consultar_lecturas_anyo}" class="active"><i class="fas fa-calendar"></i> Mis
+                    lecturas por año</a>
+
+                <a th:href="@{/consultar_por_mes_y_anyo_view}" class="active"><i class="fas fa-table"></i> Mis
+                    lecturas por mes y año</a>
+                <a th:href="@{/consultar_lecturas_genero}" class="active"><i class="fas fa-tags"></i> Mis lecturas
+                    por género</a>
+                <a th:href="@{/view_libros_por_autor}" class="active"><i class="fas fa-pen"></i> Mis lecturas
+                    por autor</a>
+
+            </nav>
+        </div>
+
+        <div class="logout">
+            <button th:onclick="|window.location.href='@{/login}'|">Cerrar sesión</button>
+        </div>
+    </aside>
+
+    <div class="header">
+        <h1>Mis Lecturas</h1>
+
+        <div class="header-actions">
+            <form class="search-bar" th:action="@{/buscar}" method="get">
+                <input type="text" name="q" placeholder="Buscar por título, autor o género" th:value="${param.q}">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
+
+            <button type="button" class="add-btn" th:onclick="|window.location.href='@{/view_add_lectura}'|">
+                <i class="fas fa-plus"></i> Nueva lectura
+            </button>
+
+            <button type="button" class="user-btn" th:onclick="|window.location.href='@{/perfil}'|">
+                <i class="fas fa-user"></i>
+            </button>
+        </div>
+    </div>
+    <main class="content">
+
+
+        <section class="cards" th:if="${libros.size() > 0}">
+            <div class="card" th:each="libro : ${libros}">
+                <h3 th:text="${libro.titulo}"></h3>
+                <p th:text="'Autor: ' + ${libro.autor}"></p>
+                <p th:text="'Género: ' + ${libro.generoLibro}"></p>
+                <p th:text="'Inicio: ' + ${#temporals.format(libro.fechaInicio, 'dd/MM/yyyy')}"></p>
+                <p th:text="'Fin: ' + ${#temporals.format(libro.fechaFin, 'dd/MM/yyyy')}"></p>
+
+                <div class="actions">
+                    <form th:action="@{/view_update_lecturas}" method="get">
+                        <input type="hidden" name="id" th:value="${libro.id}">
+                        <button type="submit" class="edit-btn"><i class="fas fa-edit"></i> Editar</button>
+                    </form>
+                    <form th:action="@{/delete}" method="post" onsubmit="return confirmDelete(this)">
+                        <input type="hidden" name="id" th:value="${libro.id}">
+                        <button type="submit" class="delete-btn"><i class="fas fa-trash"></i> Borrar</button>
+                    </form>
+                </div>
+            </div>
+
+        </section>
+
+        <div class="no-lecturas" th:if="${libros.size() == 0}">
+            <i class="fas fa-book-reader" style="font-size: 50px; color: #23a2f6; margin-bottom: 20px;"></i>
+            <h2>Aún no tienes lecturas añadidas</h2>
+            <p>Haz clic en "Añadir nueva lectura" para comenzar a registrar tus libros favoritos.</p>
+        </div>
+
+    </main>
+
+    <script>
+        function confirmDelete(form) {
+            const card = form.closest('.card');
+            const tituloLibro = card.querySelector('h3').innerText;
+
+            Swal.fire({
+                title: "¿Estás seguro/a?",
+                text: `El libro "${tituloLibro}" será eliminado y no podrás revertir esta acción.`,
+                icon: "warning",
+                theme: "dark",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sí, eliminar",
+                cancelButtonText: "Cancelar"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+
+            return false;
+        }
+
+    </script>
+
+</body>
+
+</html>

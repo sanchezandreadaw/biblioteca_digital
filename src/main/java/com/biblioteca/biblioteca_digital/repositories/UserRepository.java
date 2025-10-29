@@ -1,0 +1,13 @@
+package com.biblioteca.biblioteca_digital.repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.biblioteca.biblioteca_digital.entities.User;
+
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
+    public boolean existsByCorreo(String correo);
+
+    public User findByCorreo(String correo);
+}

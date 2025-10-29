@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Lecturas del Mes - BibliotecaDigital</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: #080710;
+            display: flex;
+            min-height: 100vh;
+            color: #fff;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(10px);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 30px 20px;
+            border-right: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: #23a2f6;
+        }
+
+        .menu a {
+            display: block;
+            text-decoration: none;
+            color: #eaf0fb;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background 0.3s;
+        }
+
+        .menu a:hover {
+            background: linear-gradient(90deg, #1845ad, #23a2f6);
+            color: #fff;
+        }
+
+        .logout {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .logout button {
+            background: linear-gradient(to right, #ff512f, #f09819);
+            border: none;
+            padding: 10px 25px;
+            color: #fff;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .content {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 500;
+            text-align: center;
+            color: #23a2f6;
+        }
+
+        .month-summary {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #ddd;
+            text-align: center;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(6px);
+            box-shadow: 0 0 15px rgba(8, 7, 16, 0.6);
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 20px;
+            color: #23a2f6;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: #ddd;
+            margin-bottom: 6px;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+
+        .no-lecturas {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #ddd;
+            height: 45%;
+            gap: 10px;
+        }
+
+        .no-lecturas h2 {
+            color: #23a2f6;
+            font-size: 24px;
+        }
+
+        .no-lecturas p {
+            font-size: 16px;
+            color: #aaa;
+            max-width: 400px;
+        }
+
+        .back-home {
+            margin: 40px auto 0 auto;
+            background: linear-gradient(135deg, #1845ad, #23a2f6);
+            border-radius: 35px;
+            padding: 14px 32px;
+            width: 250px;
+            color: #ffffff;
+            font-size: 17px;
+            font-weight: 500;
+            align-items: center;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 25px rgba(35, 162, 246, 0.4);
+        }
+
+        .back-home:hover {
+            background: linear-gradient(135deg, #23a2f6, #ff512f);
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(255, 81, 47, 0.5);
+        }
+
+        .back-home i {
+            color: #fff;
+        }
+
+        span {
+            color: #ff512f;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="content">
+        <div class="header">
+            <h1>Mis lecturas del año <span th:text="${anyo}"></span></h1>
+        </div>
+
+        <div class="month-summary" th:if="${libros.size() > 0}"
+            th:text="'En el año ' + ${anyo} + ' has leído ' + ${libros.size()} + ' libro(s).'">
+        </div>
+
+        <section class="cards" th:if="${libros.size() > 0}">
+            <div class="card" th:each="libro : ${libros}">
+                <h3 th:text="${libro.titulo}">Título del libro</h3>
+                <p th:text="'Autor: ' + ${libro.autor}">Autor: Nombre</p>
+                <p th:text="'Género: ' + ${libro.generoLibro}">Género: Género</p>
+                <p th:text="'Inicio: ' + ${#temporals.format(libro.fechaInicio, 'dd/MM/yyyy')}">Inicio: 01/10/2025</p>
+                <p th:text="'Fin: ' + ${#temporals.format(libro.fechaFin, 'dd/MM/yyyy')}">Fin: 10/10/2025</p>
+            </div>
+        </section>
+
+        <div class="no-lecturas" th:if="${libros.size() == 0}">
+            <i class="fas fa-book-reader" style="font-size: 50px; color: #23a2f6; margin-bottom: 20px;"></i>
+            <h2>No hay lecturas en este año</h2>
+            <p>Parece que no has registrado lecturas en el año <span th:text="${anyo}"></span> Añade algunas
+                para llevar un control de tus libros.
+            </p>
+        </div>
+
+        <a href="#" th:href="@{/home}" class="back-home">
+            <i class="fas fa-home"></i> Volver al inicio
+        </a>
+
+    </main>
+
+</body>
+
+</html>

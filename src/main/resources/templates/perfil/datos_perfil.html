@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Perfil - BibliotecaDigital</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            background-color: #080710;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 720px;
+            padding: 30px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .profile-card {
+            background-color: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            border-radius: 14px;
+            padding: 28px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 20px rgba(8, 7, 16, 0.6);
+        }
+
+        .profile-card h2 {
+            color: #23a2f6;
+            margin-bottom: 18px;
+            text-align: left;
+            font-size: 20px;
+        }
+
+        .profile-form {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 16px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .field label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #eaf0fb;
+        }
+
+        .field input {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #fff;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.2s;
+        }
+
+        .field input::placeholder {
+            color: rgba(255, 255, 255, 0.45);
+        }
+
+        .field input:focus {
+            outline: none;
+            border-color: #23a2f6;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-end;
+            margin-top: 6px;
+        }
+
+        .btn {
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-save {
+            background: linear-gradient(to right, #1845ad, #23a2f6);
+            color: #fff;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 10px rgba(35, 162, 246, 0.5);
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.04);
+            color: #eaf0fb;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-2px);
+        }
+
+        .error-message {
+            font-size: 13px;
+            margin-top: 4px;
+            text-align: left;
+        }
+
+        .error-message,
+        .error-message * {
+            color: #ff6b6b !important;
+        }
+
+        .global-error,
+        .global-error * {
+            color: #ff6b6b !important;
+            text-align: center;
+            margin: 8px 0 12px 0;
+            font-size: 14px;
+        }
+
+        @media (max-width: 520px) {
+            .container {
+                padding: 18px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Perfil de Usuario</h1>
+            <button type="button" class="btn btn-danger" th:onclick="|window.location.href='@{/view_update_password}'|">
+                <i class="fas fa-key"></i> Cambiar clave
+            </button>
+
+
+        </div>
+
+        <div class="profile-card">
+            <h2>Datos del perfil</h2>
+
+            <form class="profile-form" th:action="@{/update_profile}" th:object="${profile}" method="post">
+                <div class="field">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" th:field="*{nombre}" placeholder="Nombre" required />
+                    <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error-message"></div>
+                </div>
+
+                <div class="field">
+                    <label for="apellidos">Apellidos</label>
+                    <input type="text" th:field="*{apellidos}" placeholder="Apellidos" required />
+                    <div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" class="error-message"></div>
+                </div>
+
+                <div class="field">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" th:field="*{correo}" placeholder="Correo" required />
+                    <div th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}" class="error-message"></div>
+                </div>
+
+
+                <div th:if="${duplicate_user}" class="global-error">
+                    <p th:text="${duplicate_user}"></p>
+                </div>
+
+                <div th:if="${invalid_password}" class="global-error">
+                    <p th:text="${invalid_password}"></p>
+                </div>
+
+
+
+                <div class="actions">
+                    <button type="submit" class="btn btn-save">
+                        <i class="fas fa-save"></i> Actualizar perfil
+                    </button>
+                    <button type="button" class="btn btn-back" th:onclick="|window.location.href='@{/home}'|">
+                        <i class="fas fa-home"></i> Volver a Inicio
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
