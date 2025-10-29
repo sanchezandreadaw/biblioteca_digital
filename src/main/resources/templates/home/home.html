@@ -75,17 +75,61 @@
 
         .content {
             flex: 1;
-            padding: 40px;
+            padding: 120px 40px 40px 40px;
             display: flex;
             flex-direction: column;
             overflow-y: auto;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-bar input {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 14px;
+            border-radius: 6px;
+            color: #fff;
+            width: 250px;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #23a2f6;
+            box-shadow: 0 0 8px rgba(35, 162, 246, 0.5);
+        }
+
+        .search-bar button {
+            background: linear-gradient(to right, #1845ad, #23a2f6);
+            border: none;
+            color: #fff;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .search-bar button:hover {
+            background: linear-gradient(to right, #23a2f6, #1845ad);
         }
 
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 30px;
+
+            position: fixed;
+            left: 280px;
+            right: 0;
+            background: rgba(8, 7, 16, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 100;
+            padding: 20px 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .header h1 {
@@ -293,22 +337,25 @@
         </div>
     </aside>
 
-    <main class="content">
-        <div class="header">
-            <h1>Mis Lecturas</h1>
+    <div class="header">
+        <h1>Mis Lecturas</h1>
 
-            <div class="header-actions">
-                <button type="button" class="add-btn" th:onclick="|window.location.href='@{/view_add_lectura}'|">
-                    <i class="fas fa-plus"></i> Añadir nueva lectura
-                </button>
-                Mi perfil
+        <div class="header-actions">
+            <form class="search-bar" th:action="@{/buscar}" method="get">
+                <input type="text" name="q" placeholder="Buscar por título, autor o género" th:value="${param.q}">
+                <button type="submit"><i class="fas fa-search"></i></button>
+            </form>
 
-                <button type="button" class="user-btn" th:onclick="|window.location.href='@{/perfil}'|">
-                    <i class="fas fa-user"></i>
-                </button>
+            <button type="button" class="add-btn" th:onclick="|window.location.href='@{/view_add_lectura}'|">
+                <i class="fas fa-plus"></i> Nueva lectura
+            </button>
 
-            </div>
+            <button type="button" class="user-btn" th:onclick="|window.location.href='@{/perfil}'|">
+                <i class="fas fa-user"></i>
+            </button>
         </div>
+    </div>
+    <main class="content">
 
 
         <section class="cards" th:if="${libros.size() > 0}">

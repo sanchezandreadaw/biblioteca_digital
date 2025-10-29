@@ -37,15 +37,28 @@ public class HomeController {
     private LibroService libroService;
 
     @GetMapping("/home")
-    public String getHome(Model model) {
+    public String getHome(@RequestParam(value = "q", required = false) String query, Model model) {
         User usuario = userService.getUsuarioLogado();
         if (usuario == null) {
             return "redirect:/login";
         }
-        if (usuario.getLibros() != null) {
-            model.addAttribute("libros", usuario.getLibros());
+
+        List<Libro> libros;
+
+        if (query != null && !query.trim().isEmpty()) {
+            libros = libroService.buscarLibrosDeUsuario(usuario.getId(), query.trim());
+            model.addAttribute("q", query);
+        } else {
+            libros = usuario.getLibros();
         }
+
+        model.addAttribute("libros", libros);
         return "home/home";
+    }
+
+    @GetMapping("/buscar")
+    public String buscar(@RequestParam("q") String query) {
+        return "redirect:/home?q=" + query;
     }
 
     @GetMapping("/perfil")
