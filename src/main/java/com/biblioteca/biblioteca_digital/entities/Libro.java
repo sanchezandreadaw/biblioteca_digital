@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 import com.biblioteca.biblioteca_digital.enums.GeneroLibro;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -32,7 +31,6 @@ public class Libro {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true)
     @NotBlank(message = "El título del libro es requerido")
     private String titulo;
 

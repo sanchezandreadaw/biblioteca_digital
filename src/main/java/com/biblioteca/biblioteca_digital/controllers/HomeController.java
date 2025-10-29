@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.biblioteca.biblioteca_digital.dtos.AddLecturaDTO;
 import com.biblioteca.biblioteca_digital.dtos.UpdateLecturaDTO;
+import com.biblioteca.biblioteca_digital.dtos.UpdatePasswordDTO;
+import com.biblioteca.biblioteca_digital.dtos.UpdateProfileDTO;
 import com.biblioteca.biblioteca_digital.entities.Libro;
 import com.biblioteca.biblioteca_digital.entities.User;
 import com.biblioteca.biblioteca_digital.enums.GeneroLibro;
@@ -52,15 +54,86 @@ public class HomeController {
         if (usuario == null) {
             return "redirect:/login";
         }
-        String nombre = usuario.getNombre();
-        String apellidos = usuario.getApellidos();
-        String correo = usuario.getCorreo();
 
-        model.addAttribute("nombre", nombre);
-        model.addAttribute("apellidos", apellidos);
-        model.addAttribute("correo", correo);
-
+        if (!model.containsAttribute("profile")) {
+            model.addAttribute("profile", usuario);
+        }
         return "perfil/datos_perfil.html";
+    }
+
+    @PostMapping("/update_profile")
+    public String postUpdateProfile(@Valid @ModelAttribute("profile") UpdateProfileDTO updateProfileDTO,
+            BindingResult bindingResult, Model model) {
+
+        User usuario = userService.getUsuarioLogado();
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+
+        boolean updating = true;
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("profile", updateProfileDTO);
+            return "perfil/datos_perfil";
+        }
+        if (userService.userFound(updateProfileDTO.getCorreo()) && !updating) {
+            model.addAttribute("duplicate_user", "La dirección de correo ya ha sido registrada");
+            model.addAttribute("profile", updateProfileDTO);
+            return "perfil/datos_perfil";
+        }
+
+        userService.updateUser(usuario.getId(), updateProfileDTO.getNombre(), updateProfileDTO.getApellidos(),
+                updateProfileDTO.getCorreo());
+        return "redirect:/home";
+    }
+
+    @GetMapping("/view_update_password")
+    public String getViewUpdatePassword(Model model) {
+        if (!model.containsAttribute("passwordForm")) {
+            model.addAttribute("passwordForm", new UpdatePasswordDTO());
+        }
+        return "perfil/cambio_clave";
+    }
+
+    @PostMapping("/update_password")
+    public String updatePassword(@Valid @ModelAttribute("passwordForm") UpdatePasswordDTO updatePasswordDTO,
+            Model model, BindingResult bindingResult) {
+
+        User usuario = userService.getUsuarioLogado();
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("passwordForm", updatePasswordDTO);
+        }
+
+        String password = updatePasswordDTO.getPassword();
+        if (!StaticData.containsLowercase(password)) {
+            model.addAttribute("invalid_password", "La contraseña debe contener al menos una letra minúscula.");
+            model.addAttribute("passwordForm", updatePasswordDTO);
+            return "perfil/cambio_clave";
+        }
+
+        if (!StaticData.containsUpperCase(password)) {
+            model.addAttribute("invalid_password", "La contraseña debe contener al menos una letra mayúscula.");
+            model.addAttribute("passwordForm", updatePasswordDTO);
+            return "perfil/cambio_clave";
+        }
+
+        if (!StaticData.containsSpecialChar(password)) {
+            model.addAttribute("invalid_password", "La contraseña debe contener al menos un carácter especial.");
+            model.addAttribute("passwordForm", updatePasswordDTO);
+            return "perfil/cambio_clave";
+        }
+
+        String confirmPassword = updatePasswordDTO.getConfirmPassword();
+        if (!password.equals(confirmPassword)) {
+            model.addAttribute("error_confirm_password", "Las contraseñas no coinciden");
+            model.addAttribute("passwordForm", updatePasswordDTO);
+            return "perfil/cambio_clave";
+        }
+        userService.updatePassword(usuario.getId(), password);
+        return "redirect:/home";
     }
 
     @GetMapping("/view_lecturas_totales")

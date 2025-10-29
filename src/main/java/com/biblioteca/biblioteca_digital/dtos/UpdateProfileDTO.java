@@ -14,21 +14,13 @@ public class UpdateProfileDTO {
     @Email(message = "Debe proporcionar un correo electrónico válido")
     private String correo;
 
-    @Size(message = "La contraseña debe de tener al menos 8 caracteres")
-    private String password;
-
-    @Size(message = "La contraseña debe de tener al menos 8 caracteres")
-    private String confirmPassword;
-
     public UpdateProfileDTO() {
     }
 
-    public UpdateProfileDTO(String nombre, String apellidos, String correo, String password, String confirmPassword) {
+    public UpdateProfileDTO(String nombre, String apellidos, String correo) {
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.correo = correo;
-        this.password = password;
-        this.confirmPassword = confirmPassword;
 
     }
 
@@ -62,22 +54,6 @@ public class UpdateProfileDTO {
 
     public void setCorreo(String correo) {
         this.correo = correo;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
 }

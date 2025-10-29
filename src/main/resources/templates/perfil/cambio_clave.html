@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Perfil - BibliotecaDigital</title>
+    <title>Cambiar Clave - BibliotecaDigital</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;600&display=swap" rel="stylesheet">
@@ -175,53 +175,48 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Perfil de Usuario</h1>
-            <button type="button" class="btn btn-danger" th:onclick="|window.location.href='@{/view_update_password}'|">
-                <i class="fas fa-key"></i> Cambiar clave
+            <h1>Cambiar Clave</h1>
+
+            <button type="button" class="btn btn-back" th:onclick="|window.location.href='@{/perfil}'|">
+                <i class="fas fa-user"></i> Volver al Perfil
             </button>
-
-
         </div>
 
         <div class="profile-card">
-            <h2>Datos del perfil</h2>
+            <h2>Actualizar contraseña</h2>
 
-            <form class="profile-form" th:action="@{/update_profile}" th:object="${profile}" method="post">
+            <form class="profile-form" th:action="@{/update_password}" th:object="${passwordForm}" method="post">
                 <div class="field">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" th:field="*{nombre}" placeholder="Nombre" required />
-                    <div th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}" class="error-message"></div>
+                    <label for="password">Nueva Clave</label>
+                    <input type="password" th:field="*{password}" placeholder="Ingrese nueva clave" required
+                        minlength="8" />
+                    <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-message">
+                    </div>
                 </div>
 
                 <div class="field">
-                    <label for="apellidos">Apellidos</label>
-                    <input type="text" th:field="*{apellidos}" placeholder="Apellidos" required />
-                    <div th:if="${#fields.hasErrors('apellidos')}" th:errors="*{apellidos}" class="error-message"></div>
+                    <label for="confirmPassword">Confirmar Nueva Clave</label>
+                    <input type="password" th:field="*{confirmPassword}" placeholder="Confirme nueva clave" required
+                        minlength="6" />
+                    <div th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}"
+                        class="error-message"></div>
                 </div>
 
-                <div class="field">
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" th:field="*{correo}" placeholder="Correo" required />
-                    <div th:if="${#fields.hasErrors('correo')}" th:errors="*{correo}" class="error-message"></div>
-                </div>
-
-
-                <div th:if="${duplicate_user}" class="global-error">
-                    <p th:text="${duplicate_user}"></p>
+                <div th:if="${password_error}" class="global-error">
+                    <p th:text="${password_error}"></p>
                 </div>
 
                 <div th:if="${invalid_password}" class="global-error">
                     <p th:text="${invalid_password}"></p>
                 </div>
 
-
+                <div th:if="${error_confirm_password}" class="error-message">
+                    <p th:text="${error_confirm_password}"></p>
+                </div>
 
                 <div class="actions">
                     <button type="submit" class="btn btn-save">
-                        <i class="fas fa-save"></i> Actualizar perfil
-                    </button>
-                    <button type="button" class="btn btn-back" th:onclick="|window.location.href='@{/home}'|">
-                        <i class="fas fa-home"></i> Volver a Inicio
+                        <i class="fas fa-key"></i> Cambiar Clave
                     </button>
                 </div>
             </form>
